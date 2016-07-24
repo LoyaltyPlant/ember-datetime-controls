@@ -1,7 +1,7 @@
 {
   "name": "ember-datetime-controls",
   "version": "0.0.1",
-  "description": "Datetime-picker for Ember",
+  "description": "Datetime controls for Ember with time zone support",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -43,6 +43,7 @@
   },
   "keywords": [
     "ember-addon",
+    "datetime-picker",
     "moment",
     "momentjs"
   ],
