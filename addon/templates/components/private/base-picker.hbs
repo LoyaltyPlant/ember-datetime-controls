@@ -1,0 +1,22 @@
+{{private/input-control
+date=date
+timeZone=timeZone
+format=format
+locale=locale
+}}
+
+<div class="dt-picker__container">
+  {{#if dateEnabled}}
+    {{private/calendar-control
+    date=date
+    timeZone=timeZone
+    locale=locale
+    onDateUpdated=(action 'updateDate')}}
+  {{/if}}
+  {{#if timeEnabled}}
+    {{private/time-control
+    date=date
+    timeZone=timeZone
+    locale=locale}}
+  {{/if}}
+</div>

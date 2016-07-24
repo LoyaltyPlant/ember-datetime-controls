@@ -2,5 +2,5 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-datetime-picker'
+  name: 'ember-datetime-controls'
 };

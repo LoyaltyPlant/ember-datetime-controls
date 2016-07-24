@@ -1,0 +1,20 @@
+<div class="dt-picker__calendar-header">
+  {{_year}} / {{monthLabel}}
+    <br>
+    <span {{action 'previousMonth'}}>Previous</span>
+    <span {{action 'nextMonth'}}>Next</span>
+</div>
+<div class="dt-picker__calendar-weekdays">
+  {{#each weekDays as |weekDay|}}
+      <span class="dt-picker__week-day">{{weekDay}}</span>
+  {{/each}}
+</div>
+<div class="dt-picker__calendar-days">
+  {{#each weeks as |week|}}
+    <div class="dt-picker__week">
+      {{#each week.days as |day|}}
+          <span class="dt-picker__day" {{action 'setDate' day}} style="cursor: pointer">{{day}}</span>
+      {{/each}}
+    </div>
+  {{/each}}
+</div>
