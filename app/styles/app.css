@@ -1,0 +1,44 @@
+.dt-control {
+  position: relative;
+
+  max-width: 320px;
+  font-size: 12px;
+}
+
+.dt-control__input {
+  margin-bottom: 20px;
+}
+
+.dt-control__container {
+
+}
+
+.dt-control__time {
+
+}
+
+.dt-control__calendar {
+
+}
+
+.dt-control__calendar-header {
+  margin-bottom: 10px;
+
+}
+
+.dt-control__day,
+.dt-control__week-day {
+  width: 2.5em;
+  height: 2.2em;
+  display: inline-block;
+
+  text-align: center;
+  vertical-align: middle;
+  font-size: 10px;
+
+  text-transform: uppercase;
+}
+
+.dt-control__week-day {
+  font-weight: bold;
+}
