@@ -1,6 +1,6 @@
-import Ember from 'ember';
-import moment from 'moment';
-import layout from 'ember-datetime-controls/templates/components/private/base-picker';
+import Ember from "ember";
+import moment from "moment";
+import layout from "ember-datetime-controls/templates/components/private/base-picker";
 
 export default Ember.Component.extend({
   layout,
@@ -9,6 +9,8 @@ export default Ember.Component.extend({
   timeZone: null,
   format: null,
   date: null,
+  minDate: null,
+  maxDate: null,
 
   timeEnabled: true,
   dateEnabled: true,

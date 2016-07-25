@@ -5,7 +5,7 @@ module.exports = function (/* environment, appConfig */) {
   return {
     moment: {
       includeLocales: true,
-      includeTimezone: 'all'
+      includeTimezone: '2010-2020'
     }
   };
 };

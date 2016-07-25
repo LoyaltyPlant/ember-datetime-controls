@@ -1,16 +1,15 @@
 .dt-control {
   position: relative;
+}
+
+.dt-control__container {
+  position: absolute;
 
   max-width: 320px;
-  font-size: 12px;
 }
 
 .dt-control__input {
   margin-bottom: 20px;
-}
-
-.dt-control__container {
-
 }
 
 .dt-control__time {
@@ -23,22 +22,48 @@
 
 .dt-control__calendar-header {
   margin-bottom: 10px;
-
 }
 
-.dt-control__day,
-.dt-control__week-day {
-  width: 2.5em;
-  height: 2.2em;
+.dt-control__date,
+.dt-control__weekday {
+  width: 24px;
+
   display: inline-block;
-
   text-align: center;
-  vertical-align: middle;
-  font-size: 10px;
-
-  text-transform: uppercase;
 }
 
-.dt-control__week-day {
+.dt-control__date {
+  border-radius: 50%;
+
+  height: 24px;
+
+  line-height: 24px;
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.dt-control__date.current {
+  border: 1px solid cadetblue;
+}
+
+.dt-control__date.selected {
+  color: #fff;
+  background-color: cornflowerblue;
+}
+
+.dt-control__date.disabled {
+  border-radius: 50%;
+  border: none;
+
+  color: gray;
+  background-color: transparent;
+
+  cursor: default;
+}
+
+.dt-control__weekday {
+  font-size: 10px;
   font-weight: bold;
+  text-transform: uppercase;
 }
