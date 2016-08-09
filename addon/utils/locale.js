@@ -1,5 +1,5 @@
-import Ember from 'ember';
-import moment from 'moment';
+import Ember from "ember";
+import moment from "moment";
 
 export function getLocaleFirstDayOfWeek(locale) {
   return moment.localeData(locale)._week.dow;
@@ -12,3 +12,8 @@ export function getLocaleWeekDays(locale) {
 
   return weekDays.slice(firstDayOfWeek, firstDayOfWeek ? 9 : 7);
 }
+
+export default {
+  getLocaleFirstDayOfWeek,
+  getLocaleWeekDays
+};

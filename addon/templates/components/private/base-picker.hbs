@@ -3,22 +3,26 @@ date=date
 timeZone=timeZone
 format=format
 locale=locale
+click=(action 'show')
 }}
 
-<div class="dt-control__container">
-  {{#if dateEnabled}}
-    {{private/calendar-control
-    date=date
-    minDate=minDate
-    maxDate=maxDate
-    timeZone=timeZone
-    locale=locale
-    onDateUpdated=(action 'updateDate')}}
-  {{/if}}
-  {{#if timeEnabled}}
-    {{private/time-control
-    date=date
-    timeZone=timeZone
-    locale=locale}}
-  {{/if}}
-</div>
+{{#if _showControls}}
+    <div class="dt-control__container">
+      {{#if dateEnabled}}
+        {{private/calendar-control
+        date=date
+        minDate=minDate
+        maxDate=maxDate
+        disabledDates=disabledDates
+        timeZone=timeZone
+        locale=locale
+        onDateUpdated=(action 'updateDate')}}
+      {{/if}}
+      {{#if timeEnabled}}
+        {{private/time-control
+        date=date
+        timeZone=timeZone
+        locale=locale}}
+      {{/if}}
+    </div>
+{{/if}}

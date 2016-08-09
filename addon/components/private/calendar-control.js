@@ -1,6 +1,6 @@
 import Ember from "ember";
 import moment from "moment";
-import {getLocaleFirstDayOfWeek, getLocaleWeekDays} from "ember-datetime-controls/utils";
+import {getLocaleWeekDays, getLocaleFirstDayOfWeek} from "ember-datetime-controls/utils/locale";
 import layout from "ember-datetime-controls/templates/components/private/calendar-control";
 
 const WEEK = Ember.Object.extend({
@@ -14,6 +14,7 @@ export default Ember.Component.extend({
   date: null,
   minDate: null,
   maxDate: null,
+  disabledDates: null,
 
   _weekDays: null,
 
@@ -24,6 +25,7 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
     this.set('_weekDays', getLocaleWeekDays(this.get('locale')));
+    this.set('_localeFirstDayOfWeek', getLocaleFirstDayOfWeek(this.get('locale')));
   },
 
   didReceiveAttrs() {
@@ -36,38 +38,50 @@ export default Ember.Component.extend({
     return moment.months(this.get('_month'));
   }),
 
-  weeks: Ember.computed('_month', '_year', function () {
+  weeks: Ember.computed('_month', '_year', 'minDate', 'maxDate', function () {
     console.time('getting weeks');
-    let weeks = [],
+    const weeks = [],
       month = this.get('_month'),
       year = this.get('_year'),
-      firstDayOfWeek = getLocaleFirstDayOfWeek(this.get('locale')),
-      daysInMonth = moment({year, month: month}).daysInMonth(),
+      timeZone = this.get('timeZone'),
+      firstDayOfWeek = this.get('_localeFirstDayOfWeek'),
+      monthFirstDate = moment.tz([year, month, 1], timeZone),
+      daysInMonth = monthFirstDate.daysInMonth(),
+      monthLastDate = moment.tz([year, month, daysInMonth], timeZone),
+      monthFirstWeekDay = monthFirstDate.day() === 0 && firstDayOfWeek === 1 ? 7 : monthFirstDate.day(),
+      currentTimeZoneDate = moment().tz(timeZone),
+      disabledDates = this.get('disabledDates') ? this.get('disabledDates') : [],
+      minDate = this.get('minDate') ? moment.tz(this.get('minDate'), timeZone) : null,
+      maxDate = this.get('maxDate') ? moment.tz(this.get('maxDate'), timeZone) : null;
+
+    let
       firstWeek = WEEK.create({dates: []}),
-      monthFirstWeekDay = moment.tz([this.get('_year'), this.get('_month'), 1], this.get('timeZone')).day(),
       disabledMonthDates = Ember.A(),
       currentMonthDate;
 
-    if (moment().tz(this.get('timeZone')).isSame(moment.tz([this.get('_year'), this.get('_month'), 1], this.get('timeZone')), 'month')) {
-      currentMonthDate = moment().tz(this.get('timeZone')).date();
+    if (currentTimeZoneDate.month() === month) {
+      currentMonthDate = currentTimeZoneDate.date();
     }
 
-    if (moment.tz([this.get('_year'), this.get('_month'), 1], this.get('timeZone')).isSameOrBefore(moment.tz(this.get('minDate'), this.get('timeZone')))) {
-      let daysDiff = Math.abs(moment.tz([this.get('_year'), this.get('_month'), 1], this.get('timeZone')).diff(moment.tz(this.get('minDate'), this.get('timeZone')), 'days'));
+    disabledDates.forEach((disabledDate) => {
+      let disabled = moment(disabledDate).tz(timeZone);
+      if (disabled.month() === month) {
+        disabledMonthDates.addObject(disabled.date());
+      }
+    });
+
+    if (minDate && monthFirstDate.isSameOrBefore(minDate)) {
+      let daysDiff = Math.abs(monthFirstDate.diff(minDate, 'days'));
       for (let i = 1; i <= daysDiff; i++) {
         disabledMonthDates.addObject(i);
       }
     }
 
-    if (moment.tz([this.get('_year'), this.get('_month'), daysInMonth], this.get('timeZone')).isSameOrAfter(moment.tz(this.get('maxDate'), this.get('timeZone')))) {
-      let daysDiff = Math.abs(moment.tz([this.get('_year'), this.get('_month'), daysInMonth], this.get('timeZone')).diff(moment.tz(this.get('maxDate'), this.get('timeZone')), 'days'));
+    if (maxDate && monthLastDate.isSameOrAfter(maxDate)) {
+      let daysDiff = Math.abs(monthLastDate.diff(maxDate, 'days'));
       for (let i = 0; i < daysDiff; i++) {
         disabledMonthDates.addObject(daysInMonth - i);
       }
-    }
-
-    if (monthFirstWeekDay === 0 && firstDayOfWeek === 1) {
-      monthFirstWeekDay = 7;
     }
 
     if (firstDayOfWeek !== monthFirstWeekDay) {

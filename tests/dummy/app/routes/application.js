@@ -3,12 +3,20 @@ import moment from "moment";
 
 export default Ember.Route.extend({
   model() {
-    let date = moment().toDate();
+    const disabledDates = [],
+      todayDate = new Date(),
+      tommorrowDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate() +1),
+      newYorkDate = moment.tz('America/New_York').toDate(),
+      moscowDate = moment.tz('Europe/Moscow').toDate();
+
+    disabledDates.push(tommorrowDate);
 
     return {
-      date,
-      minDate: moment().subtract(1, 'days').startOf('day').toDate(),
-      maxDate: moment().add(1, 'days').startOf('day').toDate()
+      newYorkDate,
+      moscowDate,
+      disabledDates,
+      minDate: moment().subtract(2, 'days').startOf('day').toDate(),
+      maxDate: moment().add(2, 'days').startOf('day').toDate()
     };
   }
 });
