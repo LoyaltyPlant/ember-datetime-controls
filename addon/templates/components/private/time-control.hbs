@@ -1,0 +1,6 @@
+<div class="dt-control__time-picker">
+    <input type="number" step="1" data-max="23" data-min="0" data-format='hour' value={{hours}} oninput={{action 'changeTime' value="target"}}>
+    <span class="separator">:</span>
+    <input type="number" step="5" data-max="55" data-min="0" data-format='minute' value={{minutes}} oninput={{action 'changeTime' value="target"}}>
+</div>
+{{date}}
