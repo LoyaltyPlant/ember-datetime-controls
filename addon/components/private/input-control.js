@@ -5,7 +5,7 @@ import layout from "ember-datetime-controls/templates/components/private/input-c
 export default Ember.Component.extend({
   layout,
 
-  locale: null,
+  locale: 'en',
   timeZone: null,
   date: null,
   format: null,

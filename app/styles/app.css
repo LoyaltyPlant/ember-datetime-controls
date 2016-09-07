@@ -78,12 +78,11 @@
 
 
 
-.dt-control__time-picker input[type="number"] {
+.dt-control__time-picker input[type="number"], .dt-control__meridiem {
   border: none;
   width: 15%;
   padding-left: 5px;
   font-size: 12px;
-  cursor: pointer;
 }
 
 .dt-control__time-picker input[type="number"]:focus {
@@ -93,13 +92,19 @@
   font-weight: 700;
 }
 
-.dt-control__time-picker input[type="number"]:focus, .dt-control__time-picker input[type="number"]:hover {
+.dt-control__time-picker input[type="number"]:focus, .dt-control__time-picker input[type="number"]:hover, .dt-control__meridiem:hover {
   background: #f0f0f0;
 }
 
-.dt-control__time-picker .separator, .dt-control__time-picker input[type="number"] {
+.dt-control__time-picker .separator, .dt-control__time-picker input[type="number"], .dt-control__meridiem {
   height: 38px;
   display: inline-block;
   line-height: 38px;
   color: #393939;
 }
+
+.dt-control__meridiem, .dt-control__time-picker input[type="number"] {
+  cursor: pointer;
+}
+
+

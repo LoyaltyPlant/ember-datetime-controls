@@ -1,6 +1,13 @@
 <div class="dt-control__time-picker">
-    <input type="number" step="1" data-max="23" data-min="0" data-format='hour' value={{hours}} oninput={{action 'changeTime' value="target"}}>
+    <div class="dt-control__meridiem" data-step="1" data-max="12" data-min="1" data-format="hour">{{hours}}</div>
+    <button class="btn btn-decrease" {{action 'decreaseTime' 23 0 1 'hour'}} disabled="{{disableDecreaseHoursBtn}}">&#60;</button>
+    <button class="btn btn-increase" {{action 'increaseTime' 23 0 1 'hour'}} disabled="{{disableIncreaseHoursBtn}}">&#62;</button>
     <span class="separator">:</span>
-    <input type="number" step="5" data-max="55" data-min="0" data-format='minute' value={{minutes}} oninput={{action 'changeTime' value="target"}}>
+    <div class="dt-control__meridiem" data-step="5" data-max="55" data-min="0" data-format="minute">{{minutes}}</div>
+    <button class="btn btn-decrease" {{action 'decreaseTime' 55 0 5 'minute'}} disabled="{{disableDecreaseMinutesBtn}}">&#60;</button>
+    <button class="btn btn-increase" {{action 'increaseTime' 55 0 5 'minute'}} disabled="{{disableIncreaseMinutesBtn}}">&#62;</button>
+  {{#if isAmPmTimezone}}
+      <span class="dt-control__meridiem" {{action 'changeMeridiem'}}>{{meridiem}}</span>
+  {{/if}}
 </div>
 {{date}}

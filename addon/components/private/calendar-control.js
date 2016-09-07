@@ -49,7 +49,7 @@ export default Ember.Component.extend({
       daysInMonth = monthFirstDate.daysInMonth(),
       monthLastDate = moment.tz([year, month, daysInMonth], timeZone),
       monthFirstWeekDay = monthFirstDate.day() === 0 && firstDayOfWeek === 1 ? 7 : monthFirstDate.day(),
-      currentTimeZoneDate = moment().tz(timeZone),
+      currentTimeZoneDate = moment(this.get('date')).tz(timeZone),
       disabledDates = this.get('disabledDates') ? this.get('disabledDates') : [],
       minDate = this.get('minDate') ? moment.tz(this.get('minDate'), timeZone) : null,
       maxDate = this.get('maxDate') ? moment.tz(this.get('maxDate'), timeZone) : null;
@@ -60,6 +60,7 @@ export default Ember.Component.extend({
       currentMonthDate;
 
     if (currentTimeZoneDate.month() === month) {
+      debugger;
       currentMonthDate = currentTimeZoneDate.date();
     }
 
@@ -117,6 +118,7 @@ export default Ember.Component.extend({
     weeks.forEach(week => {
       week.get('dates').forEach(date => {
         if (date.index === currentMonthDate) {
+          debugger;
           date.current = true;
         }
         if (disabledMonthDates.contains(date.index)) {

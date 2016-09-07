@@ -5,7 +5,6 @@ format=format
 locale=locale
 click=(action 'show')
 }}
-
 {{#if _showControls}}
     <div class="dt-control__container">
       {{#if dateEnabled}}
@@ -22,6 +21,8 @@ click=(action 'show')
         {{private/time-control
         date=date
         timeZone=timeZone
+        minTime=minTime
+        maxTime=maxTime
         locale=locale}}
       {{/if}}
     </div>

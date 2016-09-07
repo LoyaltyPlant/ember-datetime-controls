@@ -7,17 +7,33 @@
   maxDate=model.maxDate
   format="lll"
   locale="ru"
+  _showControls=true
   timeZone="Europe/Moscow"}}
 </div>
+
 
 <div style="width:320px; float:left;">
     <h2>America/New_York</h2>
   {{date-picker
   date=model.newYorkDate
   disabledDates=model.disabledDates
+  minDate=model.yesterdayDate
+  maxDate=model.nextWeekDate
+  minTime='01:35'
+  maxTime='22:30'
   format="lll"
   locale="en"
-  _showControls=true
   timeZone="America/New_York"}}
 </div>
+
+<div style="width:320px; float:left;">
+    <h2>Europe/Berlin</h2>
+  {{date-picker
+    date=model.berlinDate
+    format="lll"
+    timeZone="Europe/Berlin"
+    locale="ru"
+  }}
+</div>
+
 
