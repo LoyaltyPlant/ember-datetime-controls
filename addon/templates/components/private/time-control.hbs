@@ -1,0 +1,38 @@
+<div class="dt-control__input dt-control__timepicker" {{action 'showHourPicker' bubbles=false}}>
+  <div class="dt-control__current-time">
+    {{currentHours}} &nbsp;<span class="icon-dropdown icon"></span>
+  </div>
+  {{#if isShowHourPicker}}
+      <div class="dt-control__time-list">
+        {{#each hours as |hour|}}
+            <div class="dt-control__time {{if hour.disabled 'disabled'}}" {{action 'selectHour' hour bubbles=false}}>
+              {{hour.value}}
+            </div>
+        {{/each}}
+      </div>
+  {{/if}}
+</div>
+<div class="dt-control__input dt-control__timepicker" {{action 'showMinutePicker' bubbles=false}}>
+  <div class="dt-control__current-time">
+    {{currentMinute}} &nbsp;<span class="icon-dropdown icon"></span>
+  </div>
+  {{#if isShowMinutePicker}}
+      <div class="dt-control__time-list">
+        {{#each minutes as |minute|}}
+            <div class="dt-control__time {{if minute.disabled 'disabled'}}" {{action 'selectMinute' minute bubbles=false}}>
+              {{minute.value}}
+            </div>
+        {{/each}}
+      </div>
+  {{/if}}
+</div>
+{{#if meridiem}}
+    <div class="dt-control__input">
+      {{meridiem}}
+    </div>
+{{/if}}
+
+{{log minTime maxTime}}
+
+
+

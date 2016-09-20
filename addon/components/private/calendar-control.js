@@ -3,6 +3,11 @@ import moment from "moment";
 import {getLocaleWeekDays, getLocaleFirstDayOfWeek} from "ember-datetime-controls/utils/locale";
 import layout from "ember-datetime-controls/templates/components/private/calendar-control";
 
+const {
+  get,
+  set
+} = Ember;
+
 const WEEK = Ember.Object.extend({
   dates: null
 });
@@ -21,6 +26,8 @@ export default Ember.Component.extend({
   _month: null,
   _year: null,
   _selectedDate: null,
+
+  classNames: ['dt-control__calendar'],
 
   init() {
     this._super(...arguments);
@@ -49,7 +56,7 @@ export default Ember.Component.extend({
       daysInMonth = monthFirstDate.daysInMonth(),
       monthLastDate = moment.tz([year, month, daysInMonth], timeZone),
       monthFirstWeekDay = monthFirstDate.day() === 0 && firstDayOfWeek === 1 ? 7 : monthFirstDate.day(),
-      currentTimeZoneDate = moment().tz(timeZone),
+      currentTimeZoneDate = moment(get(this, 'date')).tz(timeZone),
       disabledDates = this.get('disabledDates') ? this.get('disabledDates') : [],
       minDate = this.get('minDate') ? moment.tz(this.get('minDate'), timeZone) : null,
       maxDate = this.get('maxDate') ? moment.tz(this.get('maxDate'), timeZone) : null;
@@ -115,10 +122,15 @@ export default Ember.Component.extend({
     }
 
     weeks.forEach(week => {
-      week.get('dates').forEach(date => {
+      week.get('dates').forEach((date, index) => {
         if (date.index === currentMonthDate) {
           date.current = true;
         }
+
+        if ( [6, 7].includes(index+1) ) {
+          date.weekend = true;
+        }
+
         if (disabledMonthDates.contains(date.index)) {
           date.disabled = true;
         }

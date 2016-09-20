@@ -4,7 +4,7 @@ import layout from "ember-datetime-controls/templates/components/private/input-c
 
 export default Ember.Component.extend({
   layout,
-
+  classNames: ['dt-control__input-group'],
   locale: null,
   timeZone: null,
   date: null,

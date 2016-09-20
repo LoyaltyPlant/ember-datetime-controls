@@ -1,3 +1,14 @@
-<div class="dt-control__input">
+<div class="dt-control__input" {{action onClick}}>
   {{formattedDate}}
+  {{yield}}
 </div>
+{{#if timeEnabled}}
+  {{private/time-control
+    date=date
+    timeZone=timeZone
+    locale=locale
+    isAmPmTimezone=isAmPmTimezone
+    minTime=minTime
+    maxTime=maxTime
+  }}
+{{/if}}

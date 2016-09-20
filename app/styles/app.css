@@ -1,69 +1,186 @@
+.dt-control__input-group {
+  font-family: Roboto, serif; }
+
 .dt-control {
-  position: relative;
-}
+  position: relative; }
+
+.cf:before, .dt-control__container:before,
+.cf:after,
+.dt-control__container:after {
+  content: " ";
+  display: table; }
+
+.cf:after, .dt-control__container:after {
+  clear: both; }
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf, .dt-control__container {
+  *zoom: 1; }
+
+@font-face {
+  font-family: "dt";
+  src: url("fonts/dt.eot");
+  src: url("fonts/dt.eot?#iefix") format("embedded-opentype"), url("fonts/dt.woff") format("woff"), url("fonts/dt.ttf") format("truetype"), url("fonts/dt.svg#dt") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+[data-icon]:before {
+  font-family: "dt" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "dt" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon {
+  font-size: 9px; }
+  .icon-dropdown {
+    color: #989ba4; }
+
+.icon-clear:before {
+  content: "\61"; }
+
+.icon-dropdown:before {
+  content: "\62"; }
+
+.icon-next:before {
+  content: "\63"; }
+
+.icon-previous:before {
+  content: "\64"; }
+
+.dt-control__input-group {
+  display: inline-block;
+  border: 1px solid #d5d7da;
+  position: relative; }
+
+.dt-control__input {
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #d5d7da;
+  margin-left: -4px;
+  cursor: pointer; }
+
+.dt-control__input:first-child {
+  margin-left: 0; }
+
+.dt-control__input:last-child {
+  border-right: none; }
+
+.dt-control__timepicker {
+  position: relative; }
+.dt-control__time-list {
+  position: absolute;
+  height: 225px;
+  overflow-x: hidden;
+  top: 42px;
+  background-color: white;
+  border: 1px solid #d9dadd;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  left: -1px;
+  z-index: 1; }
+  .dt-control__time-list::-webkit-scrollbar {
+    width: 3px;
+    background: white; }
+  .dt-control__time-list::-webkit-scrollbar-thumb {
+    background-color: darkgrey; }
+.dt-control__time {
+  line-height: 30px;
+  width: 70px;
+  cursor: pointer; }
+  .dt-control__time:hover {
+    background-color: rgba(47, 120, 185, 0.15); }
+  .dt-control__time.disabled {
+    color: #d9dadd;
+    cursor: not-allowed; }
 
 .dt-control__container {
   position: absolute;
-
-  max-width: 320px;
-}
-
-.dt-control__input {
-  margin-bottom: 20px;
-}
-
-.dt-control__time {
-
-}
+  width: 100%;
+  top: 42px;
+  left: 0;
+  background-color: white;
+  border: 1px solid #d9dadd;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 19px 0 25px 0; }
 
 .dt-control__calendar {
+  width: 210px;
+  margin: auto; }
 
-}
+.dt-control__next-month {
+  float: right; }
+.dt-control__prev-month {
+  float: left; }
+.dt-control__prev-month, .dt-control__next-month {
+  color: #467ab2; }
 
 .dt-control__calendar-header {
-  margin-bottom: 10px;
-}
+  margin-bottom: 20px;
+  text-align: center;
+  color: #2f79b9;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px; }
 
 .dt-control__date,
 .dt-control__weekday {
-  width: 24px;
-
   display: inline-block;
-  text-align: center;
-}
+  text-align: center; }
+
+.dt-control__weekday {
+  width: 26px; }
+
+.dt-control__weekend {
+  color: #d0021b; }
 
 .dt-control__date {
-  border-radius: 50%;
-
+  width: 24px;
   height: 24px;
-
   line-height: 24px;
   font-size: 12px;
-
   cursor: pointer;
-}
+  border: 1px solid transparent; }
 
 .dt-control__date.current {
-  border: 1px solid cadetblue;
-}
+  border: 1px solid #2f79b9;
+  background-color: rgba(47, 120, 185, 0.15); }
 
 .dt-control__date.selected {
   color: #fff;
-  background-color: cornflowerblue;
-}
+  background-color: cornflowerblue; }
 
 .dt-control__date.disabled {
+  border: 1px solid transparent;
   border-radius: 50%;
-  border: none;
-
   color: gray;
   background-color: transparent;
-
-  cursor: default;
-}
+  cursor: default; }
 
 .dt-control__weekday {
   font-size: 10px;
   font-weight: bold;
-  text-transform: uppercase;
-}
+  text-transform: uppercase; }
+
+/*# sourceMappingURL=app.css.map */

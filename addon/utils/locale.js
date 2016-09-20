@@ -7,10 +7,11 @@ export function getLocaleFirstDayOfWeek(locale) {
 
 export function getLocaleWeekDays(locale) {
   let firstDayOfWeek = getLocaleFirstDayOfWeek(locale),
-    weekDays = Ember.A(moment.localeData(locale)._weekdaysMin);
+      weekDays = Ember.A(moment.localeData(locale)._weekdaysMin);
+
   weekDays.push(weekDays[0]);
 
-  return weekDays.slice(firstDayOfWeek, firstDayOfWeek ? 9 : 7);
+  return weekDays.slice(firstDayOfWeek, firstDayOfWeek ? 8 : 7);
 }
 
 export default {
