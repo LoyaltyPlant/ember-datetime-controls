@@ -111,6 +111,8 @@
   line-height: 30px;
   width: 70px;
   cursor: pointer; }
+  .dt-control__time-minutes {
+    width: 50px; }
   .dt-control__time:hover {
     background-color: rgba(47, 120, 185, 0.15); }
   .dt-control__time.disabled {
@@ -128,7 +130,8 @@
   border: 1px solid #d9dadd;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 19px 0 25px 0; }
+  padding: 19px 0 25px 0;
+  z-index: 9; }
 
 .dt-control__calendar {
   width: 210px;

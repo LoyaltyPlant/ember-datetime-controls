@@ -4,10 +4,13 @@
   format=format
   locale=locale
   isAmPmTimezone=isAmPmTimezone
-  onClick=(action 'show')
+  showCalendar=(action 'show')
+  hideCalendar=(action 'hide')
   timeEnabled=true
   minTime=minTime
   maxTime=maxTime
+  minDate=minDate
+  maxDate=maxDate
 }}
   {{#if _showControls}}
       <div class="dt-control__container">

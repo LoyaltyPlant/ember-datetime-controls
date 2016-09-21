@@ -33,6 +33,9 @@
     line-height: 30px;
     width: 70px;
     cursor: pointer;
+    &-minutes {
+      width: 50px;
+    }
     &:hover {
       background-color: rgba(47, 120, 185, 0.15);
     }

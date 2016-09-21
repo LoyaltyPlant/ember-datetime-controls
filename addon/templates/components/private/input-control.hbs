@@ -1,4 +1,4 @@
-<div class="dt-control__input" {{action onClick bubbles=false}}>
+<div class="dt-control__input" {{action showCalendar bubbles=false}}>
   {{formattedDate}}
   {{yield}}
 </div>
@@ -10,5 +10,6 @@
     isAmPmTimezone=isAmPmTimezone
     minTime=minTime
     maxTime=maxTime
+    hideCalendar=hideCalendar
   }}
 {{/if}}

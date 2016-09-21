@@ -74,28 +74,47 @@ export default Ember.Component.extend({
     }
   }),
 
-  _minHourTime: computed('minTime', function () {
+  _minTime: computed('minDate', function () {
     const minTime = get(this, 'minTime');
+    const minDate = get(this, 'minDate');
+    const minDatetime = (minDate) ? this._getDatetime(get(this, 'minDate'), 'HH:mm') : minTime;
+    return (minTime > minDatetime) ? minTime : minDatetime;
+  }),
+  _maxTime: computed('maxDate', function () {
+    const maxTime = get(this, 'maxTime');
+    const maxDate = get(this, 'maxDate');
+    const maxDatetime = (maxDate) ? this._getDatetime(get(this, 'maxDate'), 'HH:mm') : maxTime;
+    return (maxTime > maxDatetime) ? maxTime : maxDatetime;
+  }),
+  _minHourTime: computed('_minTime', function () {
+    const minTime = get(this, '_minTime');
     return (minTime) ? +minTime.split(':')[0] : null;
   }),
-  _minMinuteTime: computed('minTime', function () {
-    const minTime = get(this, 'minTime');
+  _minMinuteTime: computed('_minTime', function () {
+    const minTime = get(this, '_minTime');
     return (minTime) ? +minTime.split(':')[1] : null;
   }),
-  _maxHourTime: computed('maxTime', function () {
-    const maxTime = get(this, 'maxTime');
+  _maxHourTime: computed('_maxTime', function () {
+    const maxTime = get(this, '_maxTime');
     return (maxTime) ? +maxTime.split(':')[0] : HOURS + 1;
   }),
-  _maxMinuteTime: computed('maxTime', function () {
-    const maxTime = get(this, 'maxTime');
+  _maxMinuteTime: computed('_maxTime', function () {
+    const maxTime = get(this, '_maxTime');
     return (maxTime) ? +maxTime.split(':')[1] : MINUTES + 1;
   }),
+
 
   _formatTime(time) {
     return `0${time}`.slice(-2);
   },
   _getTime(format) {
     return moment(this.get('date'))
+      .tz(this.get('timeZone'))
+      .locale(this.get('locale'))
+      .format(format);
+  },
+  _getDatetime(date, format) {
+    return moment(date)
       .tz(this.get('timeZone'))
       .locale(this.get('locale'))
       .format(format);
@@ -107,13 +126,13 @@ export default Ember.Component.extend({
       .toDate());
   },
   _checkTimeLimit (timeString) {
-    if ( timeString > get(this, 'maxTime') ) {
+    if ( timeString > get(this, '_maxTime') ) {
       this._setTime({
         hour: get(this, '_maxHourTime'),
         minute: get(this, '_maxMinuteTime')
       });
       return false;
-    } else if ( timeString < get(this, 'minTime') ) {
+    } else if ( timeString < get(this, '_minTime') ) {
       this._setTime({
         hour: get(this, '_minHourTime'),
         minute: get(this, '_minMinuteTime')
@@ -123,23 +142,24 @@ export default Ember.Component.extend({
     return true;
   },
   _isDisabledMinute(timeString) {
-    return ( timeString > get(this, 'maxTime') || timeString < get(this, 'minTime'));
+    return ( timeString > get(this, '_maxTime') || timeString < get(this, '_minTime'));
   },
   _isDisabledHour(hour) {
     return (hour > get(this, '_maxHourTime') || hour < get(this, '_minHourTime'));
   },
   actions: {
-    showMinutePicker() {
+    showMinutePicker(hideCalendar) {
       set(this, 'isShowMinutePicker', true);
       this.send('hideHourPicker');
+      hideCalendar();
     },
     hideMinutePicker () {
       set(this, 'isShowMinutePicker', false);
     },
-    showHourPicker () {
+    showHourPicker (hideCalendar) {
       set(this, 'isShowHourPicker', true);
       this.send('hideMinutePicker');
-
+      hideCalendar();
     },
     hideHourPicker () {
       set(this, 'isShowHourPicker', false);
@@ -189,6 +209,6 @@ export default Ember.Component.extend({
     });
   },
   willDestroyElement() {
-    $('html, body').unbind();
+    // $('html, body').unbind();
   }
 });
