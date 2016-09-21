@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from 'ember-datetime-controls/templates/components/private/time-control';
-import { MINUTES, HOURS, MERIDIEM } from 'ember-datetime-controls/utils/constants';
+import { MAX_MINUTES, MAX_HOURS, MERIDIEM } from 'ember-datetime-controls/utils/constants';
 import moment from 'moment';
 
 const {
@@ -11,13 +11,15 @@ const {
   $
 } = Ember;
 
+
+//TODO: Перенести disabled в шаблон
 export default Ember.Component.extend({
   layout,
   tagName: '',
-  hours: computed(function () {
+  hours: computed('_minTime', '_maxTime', function () {
     const hours = A();
     let hourValue = 0;
-    if (get(this, 'isAmPmTimezone')) {
+    if (get(this, 'isAmPm')) {
       const meridiems = {1: 'am', 2: 'pm'};
       for (let i = 1; i <= 2; i++) {
         let hourItem = {title: `${MERIDIEM} ${meridiems[i]}`, value: hourValue};
@@ -36,7 +38,7 @@ export default Ember.Component.extend({
         }
       }
     } else {
-      for (let hour = 0; hour < HOURS; hour++) {
+      for (let hour = 0; hour < MAX_HOURS; hour++) {
         const hourItem = {title: this._formatTime(hour), value: hour};
         if ( this._isDisabledHour(hour) ) {
           hourItem.disabled = true;
@@ -48,14 +50,15 @@ export default Ember.Component.extend({
     return hours;
   }),
   currentHours: computed('date', function () {
-    const format = (get(this, 'isAmPmTimezone')) ? 'hh' : 'HH';
+    const format = (get(this, 'isAmPm')) ? 'hh' : 'HH';
     return this._getTime(format);
   }),
-  minutes: computed('date', function () {
+  minutes: computed('date', '_minDate', '_maxDate', function () {
     let minutes = A();
-    for (let minute = 0; minute < MINUTES; minute += 5) {
+    const hour = this._getTime('HH');
+    for (let minute = 0; minute < MAX_MINUTES; minute += 5) {
       const minuteItem = { title: this._formatTime(minute), value: minute };
-      const possibleTime = `${this._getTime('HH')}:${minuteItem.title}`;
+      const possibleTime = `${hour}:${minuteItem.title}`;
 
       if ( this._isDisabledMinute(possibleTime) ) {
         minuteItem.disabled = true;
@@ -68,10 +71,12 @@ export default Ember.Component.extend({
   currentMinute: computed('date', function () {
     return this._getTime('mm');
   }),
+
   meridiem: computed('date', function () {
-    if (get(this, 'isAmPmTimezone')) {
+    if (get(this, 'isAmPm')) {
       return this._getTime('a');
     }
+    return '';
   }),
 
   _minTime: computed('minDate', function () {
@@ -96,11 +101,11 @@ export default Ember.Component.extend({
   }),
   _maxHourTime: computed('_maxTime', function () {
     const maxTime = get(this, '_maxTime');
-    return (maxTime) ? +maxTime.split(':')[0] : HOURS + 1;
+    return (maxTime) ? +maxTime.split(':')[0] : MAX_HOURS + 1;
   }),
   _maxMinuteTime: computed('_maxTime', function () {
     const maxTime = get(this, '_maxTime');
-    return (maxTime) ? +maxTime.split(':')[1] : MINUTES + 1;
+    return (maxTime) ? +maxTime.split(':')[1] : MAX_MINUTES + 1;
   }),
 
 
@@ -183,10 +188,8 @@ export default Ember.Component.extend({
       }
 
       this.send('hideHourPicker');
-
     },
     selectMinute({ value, disabled }) {
-
       const hour = this._getTime('HH');
       const newTimeString = `${hour}:${this._formatTime(value)}`;
 
@@ -209,6 +212,6 @@ export default Ember.Component.extend({
     });
   },
   willDestroyElement() {
-    // $('html, body').unbind();
+    $('html, body').unbind();
   }
 });

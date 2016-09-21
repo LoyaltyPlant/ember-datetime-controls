@@ -14,13 +14,13 @@ export default Ember.Component.extend({
   locale: window.navigator.userLanguage || window.navigator.language || "en",
   timeZone: null,
   format: null,
-  date: null,
+  date: new Date(),
   minDate: null,
   maxDate: null,
   disabledDates: null,
   minTime: null,
   maxTime: null,
-  isAmPmTimezone: null,
+  isAmPm: null,
   timeEnabled: true,
   dateEnabled: true,
 
@@ -49,11 +49,14 @@ export default Ember.Component.extend({
     this._super(...arguments);
     $('html, body').click(() => {
       self.send('hide');
-    })
+    });
+  },
+  willDestroy() {
+    $('html, body').unbind();
   },
   didReceiveAttrs() {
     this._super(...arguments);
-    set(this, 'isAmPmTimezone', !!moment(this.get('date'))
+    set(this, 'isAmPm', !!moment(this.get('date'))
       .tz(get(this, 'timeZone'))
       .locale(get(this, 'locale'))
       .format('LT')
