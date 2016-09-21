@@ -13,6 +13,10 @@
   cursor: pointer;
 }
 
+.dt-control__meridiem {
+  cursor: default;
+}
+
 .dt-control__input:first-child {
   margin-left: 0;
 }

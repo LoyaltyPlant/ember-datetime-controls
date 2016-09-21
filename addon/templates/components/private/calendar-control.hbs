@@ -3,7 +3,7 @@
 </div>
 <div class="dt-control__calendar-weekdays">
   {{#each _weekDays as |weekDay|}}
-      <span class="dt-control__weekday {{if weekDay.weekend 'dt-control__weekend'}}">{{weekDay}}</span>
+      <span class="dt-control__weekday {{if weekDay.weekend 'dt-control__weekend'}}">{{weekDay.weekDay}}</span>
   {{/each}}
 </div>
 <div class="dt-control__calendar-dates">

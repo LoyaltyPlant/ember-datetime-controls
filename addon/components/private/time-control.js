@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from 'ember-datetime-controls/templates/components/private/time-control';
+import { MINUTES, HOURS, MERIDIEM } from 'ember-datetime-controls/utils/constants';
 import moment from 'moment';
 
 const {
@@ -15,40 +16,48 @@ export default Ember.Component.extend({
   tagName: '',
   hours: computed(function () {
     const hours = A();
+    let hourValue = 0;
     if (get(this, 'isAmPmTimezone')) {
       const meridiems = {1: 'am', 2: 'pm'};
       for (let i = 1; i <= 2; i++) {
-        hours.push(`12 ${meridiems[i]}`);
-        for (let hour = 1; hour <= 11; hour++) {
-          hours.push({ value: `${this._formatTime(hour)} ${meridiems[i]}` });
+        let hourItem = {title: `${MERIDIEM} ${meridiems[i]}`, value: hourValue};
+        if ( this._isDisabledHour(hourValue) ) {
+          hourItem.disabled = true;
+        }
+        hours.push(hourItem);
+        hourValue++;
+        for (let hour = 1; hour < MERIDIEM; hour++) {
+          let hourItem = { title: `${this._formatTime(hour)} ${meridiems[i]}`, value: hourValue };
+          if ( this._isDisabledHour(hourValue) ) {
+            hourItem.disabled = true;
+          }
+          hours.push(hourItem);
+          hourValue++;
         }
       }
     } else {
-      for (let hour = 0; hour < 24; hour++) {
-        const hourItem = {value: this._formatTime(hour)};
-        if ( hour > get(this, '_maxHourTime') || hour < get(this, '_minHourTime')) {
+      for (let hour = 0; hour < HOURS; hour++) {
+        const hourItem = {title: this._formatTime(hour), value: hour};
+        if ( this._isDisabledHour(hour) ) {
           hourItem.disabled = true;
         }
         hours.push(hourItem);
       }
     }
 
-    console.log(get(this, '_minHourTime'));
-    console.log(get(this, '_maxHourTime'));
-
     return hours;
   }),
   currentHours: computed('date', function () {
     const format = (get(this, 'isAmPmTimezone')) ? 'hh' : 'HH';
-    return this.getTime(format);
+    return this._getTime(format);
   }),
   minutes: computed('date', function () {
     let minutes = A();
-    for (let minute = 0; minute < 60; minute += 5) {
-      const minuteItem = { value: this._formatTime(minute) };
-      const possibleTime = `${this.getTime('HH')}:${minuteItem.value}`;
+    for (let minute = 0; minute < MINUTES; minute += 5) {
+      const minuteItem = { title: this._formatTime(minute), value: minute };
+      const possibleTime = `${this._getTime('HH')}:${minuteItem.title}`;
 
-      if ( possibleTime > this.get('maxTime') || possibleTime < this.get('minTime')) {
+      if ( this._isDisabledMinute(possibleTime) ) {
         minuteItem.disabled = true;
       }
 
@@ -57,11 +66,11 @@ export default Ember.Component.extend({
     return minutes;
   }),
   currentMinute: computed('date', function () {
-    return this.getTime('mm');
+    return this._getTime('mm');
   }),
   meridiem: computed('date', function () {
     if (get(this, 'isAmPmTimezone')) {
-      return this.getTime('a');
+      return this._getTime('a');
     }
   }),
 
@@ -70,24 +79,54 @@ export default Ember.Component.extend({
     return (minTime) ? +minTime.split(':')[0] : null;
   }),
   _minMinuteTime: computed('minTime', function () {
-
+    const minTime = get(this, 'minTime');
+    return (minTime) ? +minTime.split(':')[1] : null;
   }),
   _maxHourTime: computed('maxTime', function () {
     const maxTime = get(this, 'maxTime');
-    return (maxTime) ? +maxTime.split(':')[0] : null;
+    return (maxTime) ? +maxTime.split(':')[0] : HOURS + 1;
   }),
   _maxMinuteTime: computed('maxTime', function () {
-
+    const maxTime = get(this, 'maxTime');
+    return (maxTime) ? +maxTime.split(':')[1] : MINUTES + 1;
   }),
 
   _formatTime(time) {
     return `0${time}`.slice(-2);
   },
-  getTime(format) {
+  _getTime(format) {
     return moment(this.get('date'))
       .tz(this.get('timeZone'))
       .locale(this.get('locale'))
       .format(format);
+  },
+  _setTime(newTime) {
+    set(this, 'date', moment(get(this, 'date'))
+      .tz(get(this, 'timeZone'))
+      .set(newTime)
+      .toDate());
+  },
+  _checkTimeLimit (timeString) {
+    if ( timeString > get(this, 'maxTime') ) {
+      this._setTime({
+        hour: get(this, '_maxHourTime'),
+        minute: get(this, '_maxMinuteTime')
+      });
+      return false;
+    } else if ( timeString < get(this, 'minTime') ) {
+      this._setTime({
+        hour: get(this, '_minHourTime'),
+        minute: get(this, '_minMinuteTime')
+      });
+      return false;
+    }
+    return true;
+  },
+  _isDisabledMinute(timeString) {
+    return ( timeString > get(this, 'maxTime') || timeString < get(this, 'minTime'));
+  },
+  _isDisabledHour(hour) {
+    return (hour > get(this, '_maxHourTime') || hour < get(this, '_minHourTime'));
   },
   actions: {
     showMinutePicker() {
@@ -112,44 +151,34 @@ export default Ember.Component.extend({
 
     },
     selectHour({ value, disabled }) {
+      const minute = this._getTime('mm');
+      const newTimeString = `${this._formatTime(value)}:${minute}`;
+
       if ( disabled ) {
         return false;
       }
-      let _hour;
-      if (get(this, 'isAmPmTimezone')) {
-        const meridiem = value.replace(/[^a-z]+/g, '');
-        _hour = +value.replace(/[^0-9]+/g, '');
-        if (meridiem === 'am' && _hour === 12) {
-          _hour = 0;
-        } else if ( meridiem === 'pm' && _hour < 12 ) {
-          _hour += 12;
-        }
-      } else {
-        _hour = +value;
+
+      if ( this._checkTimeLimit(newTimeString) ) {
+        this._setTime({hour: value});
       }
-      set(this, 'date', moment(get(this, 'date'))
-        .tz(get(this, 'timeZone'))
-        .set('hour', _hour)
-        .toDate());
 
       this.send('hideHourPicker');
 
     },
     selectMinute({ value, disabled }) {
+
+      const hour = this._getTime('HH');
+      const newTimeString = `${hour}:${this._formatTime(value)}`;
+
       if ( disabled ) {
         return false;
       }
-      const hour = this.getTime('HH');
-      if ( `${hour}:${value}` > get(this, 'maxTime') ) {
 
+      if ( this._checkTimeLimit(newTimeString) ) {
+        this._setTime({minute: value});
       }
-      set(this, 'date', moment(get(this, 'date'))
-        .tz(get(this, 'timeZone'))
-        .set('minute', value)
-        .toDate());
 
       this.send('hideMinutePicker');
-
     }
   },
   init() {

@@ -4,7 +4,8 @@ import layout from "ember-datetime-controls/templates/components/private/base-pi
 
 const {
   get,
-  set
+  set,
+  $
 } = Ember;
 
 export default Ember.Component.extend({
@@ -32,9 +33,6 @@ export default Ember.Component.extend({
     hide() {
       this.set('_showControls', false);
     },
-    toggleShow() {
-      this.toggleProperty('_showControls');
-    },
     updateDate(dateProperties) {
       let newDate = moment.tz(this.get('date'), this.get('timeZone')).set(dateProperties);
 
@@ -46,7 +44,13 @@ export default Ember.Component.extend({
       this.send('hide');
     }
   },
-
+  init() {
+    const self = this;
+    this._super(...arguments);
+    $('html, body').click(() => {
+      self.send('hide');
+    })
+  },
   didReceiveAttrs() {
     this._super(...arguments);
     set(this, 'isAmPmTimezone', !!moment(this.get('date'))

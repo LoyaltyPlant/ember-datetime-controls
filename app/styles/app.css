@@ -79,6 +79,9 @@
   margin-left: -4px;
   cursor: pointer; }
 
+.dt-control__meridiem {
+  cursor: default; }
+
 .dt-control__input:first-child {
   margin-left: 0; }
 
@@ -113,6 +116,8 @@
   .dt-control__time.disabled {
     color: #d9dadd;
     cursor: not-allowed; }
+    .dt-control__time.disabled:hover {
+      background: transparent; }
 
 .dt-control__container {
   position: absolute;

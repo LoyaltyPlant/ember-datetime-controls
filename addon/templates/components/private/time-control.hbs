@@ -6,7 +6,7 @@
       <div class="dt-control__time-list">
         {{#each hours as |hour|}}
             <div class="dt-control__time {{if hour.disabled 'disabled'}}" {{action 'selectHour' hour bubbles=false}}>
-              {{hour.value}}
+              {{hour.title}}
             </div>
         {{/each}}
       </div>
@@ -20,19 +20,17 @@
       <div class="dt-control__time-list">
         {{#each minutes as |minute|}}
             <div class="dt-control__time {{if minute.disabled 'disabled'}}" {{action 'selectMinute' minute bubbles=false}}>
-              {{minute.value}}
+              {{minute.title}}
             </div>
         {{/each}}
       </div>
   {{/if}}
 </div>
 {{#if meridiem}}
-    <div class="dt-control__input">
+    <div class="dt-control__input dt-control__meridiem">
       {{meridiem}}
     </div>
 {{/if}}
-
-{{log minTime maxTime}}
 
 
 

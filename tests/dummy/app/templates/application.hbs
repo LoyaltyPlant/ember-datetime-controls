@@ -15,10 +15,22 @@
 <div style="width:320px; float:left;">
     <h2>America/New_York</h2>
   {{date-picker
-  date=model.newYorkDate
-  disabledDates=model.disabledDates
-  format="LL"
-  locale="en"
-  timeZone="America/New_York"}}
+    date=model.newYorkDate
+    disabledDates=model.disabledDates
+    format="LL"
+    locale="en"
+    timeZone="America/New_York"}}
+</div>
+
+<div style="width:320px; float:left;">
+    <h2>America/Chicago</h2>
+  {{date-picker
+    date=model.todayDate
+    disabledDates=model.disabledDates
+    format="LL"
+    locale="en"
+    minTime='10:30'
+    maxTime='19:55'
+    timeZone="America/Chicago"}}
 </div>
 

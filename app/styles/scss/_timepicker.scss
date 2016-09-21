@@ -39,6 +39,9 @@
     &.disabled {
       color: #d9dadd;
       cursor: not-allowed;
+      &:hover {
+        background: transparent;
+      }
     }
   }
 }

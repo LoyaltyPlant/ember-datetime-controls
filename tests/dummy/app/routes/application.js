@@ -21,6 +21,7 @@ export default Ember.Route.extend({
       nextWeekDate,
       moscowDate,
       disabledDates,
+      todayDate,
       minDate: moment().subtract(2, 'days').startOf('day').toDate(),
       maxDate: moment().add(2, 'days').startOf('day').toDate()
     };

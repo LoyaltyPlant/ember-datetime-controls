@@ -31,8 +31,29 @@ export default Ember.Component.extend({
 
   init() {
     this._super(...arguments);
-    this.set('_weekDays', getLocaleWeekDays(this.get('locale')));
-    this.set('_localeFirstDayOfWeek', getLocaleFirstDayOfWeek(this.get('locale')));
+    set(this, '_weekDays', getLocaleWeekDays(get(this, 'locale')));
+    set(this, '_localeFirstDayOfWeek', getLocaleFirstDayOfWeek(get(this, 'locale')));
+
+    const weekDays =  get(this, '_weekDays');
+
+    if ( get(this, '_localeFirstDayOfWeek') === 0 ) {
+      set(this, '_weekDays', weekDays.map((weekDay, index) => {
+        let weekDayItem = { weekDay };
+        if ( index === 0 ) {
+          weekDayItem.weekend = true;
+        }
+        return weekDayItem;
+      }));
+    } else {
+      set(this, '_weekDays', weekDays.map((weekDay, index) => {
+        let weekDayItem = { weekDay };
+        if ( [6, 7].includes(index + 1) ) {
+          weekDayItem.weekend = true;
+        }
+        return weekDayItem;
+      }));
+    }
+
   },
 
   didReceiveAttrs() {
@@ -42,7 +63,14 @@ export default Ember.Component.extend({
   },
 
   monthLabel: Ember.computed('_month', function () {
-    return moment.months(this.get('_month'));
+    const locale = get(this, 'locale');
+
+    if ( locale !== 'ru' ) {
+      return moment.months(this.get('_month'));
+    } else {
+      return moment.tz(get(this, 'timeZone')).locale(locale)._locale._months.standalone[get(this, '_month')];
+    }
+
   }),
 
   weeks: Ember.computed('_month', '_year', 'minDate', 'maxDate', function () {
@@ -127,9 +155,17 @@ export default Ember.Component.extend({
           date.current = true;
         }
 
-        if ( [6, 7].includes(index+1) ) {
-          date.weekend = true;
+        if ( firstDayOfWeek === 1 ) {
+          if ( [6, 7].includes(index+1) ) {
+            date.weekend = true;
+          }
+        } else {
+          if ( index === 0 ) {
+            date.weekend = true;
+          }
         }
+
+
 
         if (disabledMonthDates.contains(date.index)) {
           date.disabled = true;
