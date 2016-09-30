@@ -1,0 +1,14 @@
+
+.picker-container {
+  display: flex;
+}
+
+.controls-up {
+  &.dt-control__container {
+    top: -241px;
+  }
+
+  .dt-control__time-list {
+    top: -231px;
+  }
+}

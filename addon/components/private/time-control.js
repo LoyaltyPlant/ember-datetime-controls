@@ -1,84 +1,18 @@
 import Ember from 'ember';
-import layout from 'ember-datetime-controls/templates/components/private/time-control';
-import { MAX_MINUTES, MAX_HOURS, MERIDIEM } from 'ember-datetime-controls/utils/constants';
+import { MAX_MINUTES, MAX_HOURS } from 'ember-datetime-controls/utils/constants';
 import moment from 'moment';
+import BaseControl from './control';
 
 const {
   get,
   set,
-  computed,
-  A,
-  $
+  computed
 } = Ember;
 
 
 //TODO: Перенести disabled в шаблон
-export default Ember.Component.extend({
-  layout,
-  tagName: '',
-  hours: computed('_minTime', '_maxTime', function () {
-    const hours = A();
-    let hourValue = 0;
-    if (get(this, 'isAmPm')) {
-      const meridiems = {1: 'am', 2: 'pm'};
-      for (let i = 1; i <= 2; i++) {
-        let hourItem = {title: `${MERIDIEM} ${meridiems[i]}`, value: hourValue};
-        if ( this._isDisabledHour(hourValue) ) {
-          hourItem.disabled = true;
-        }
-        hours.push(hourItem);
-        hourValue++;
-        for (let hour = 1; hour < MERIDIEM; hour++) {
-          let hourItem = { title: `${this._formatTime(hour)} ${meridiems[i]}`, value: hourValue };
-          if ( this._isDisabledHour(hourValue) ) {
-            hourItem.disabled = true;
-          }
-          hours.push(hourItem);
-          hourValue++;
-        }
-      }
-    } else {
-      for (let hour = 0; hour < MAX_HOURS; hour++) {
-        const hourItem = {title: this._formatTime(hour), value: hour};
-        if ( this._isDisabledHour(hour) ) {
-          hourItem.disabled = true;
-        }
-        hours.push(hourItem);
-      }
-    }
-
-    return hours;
-  }),
-  currentHours: computed('date', function () {
-    const format = (get(this, 'isAmPm')) ? 'hh' : 'HH';
-    return this._getTime(format);
-  }),
-  minutes: computed('date', '_minDate', '_maxDate', function () {
-    let minutes = A();
-    const hour = this._getTime('HH');
-    for (let minute = 0; minute < MAX_MINUTES; minute += 5) {
-      const minuteItem = { title: this._formatTime(minute), value: minute };
-      const possibleTime = `${hour}:${minuteItem.title}`;
-
-      if ( this._isDisabledMinute(possibleTime) ) {
-        minuteItem.disabled = true;
-      }
-
-      minutes.push(minuteItem);
-    }
-    return minutes;
-  }),
-  currentMinute: computed('date', function () {
-    return this._getTime('mm');
-  }),
-
-  meridiem: computed('date', function () {
-    if (get(this, 'isAmPm')) {
-      return this._getTime('a');
-    }
-    return '';
-  }),
-
+export default BaseControl.extend({
+  classNames: ['picker-container'],
   _minTime: computed('minDate', function () {
     const minTime = get(this, 'minTime');
     const minDate = get(this, 'minDate');
@@ -108,28 +42,31 @@ export default Ember.Component.extend({
     return (maxTime) ? +maxTime.split(':')[1] : MAX_MINUTES + 1;
   }),
 
-
   _formatTime(time) {
     return `0${time}`.slice(-2);
   },
+
   _getTime(format) {
     return moment(this.get('date'))
       .tz(this.get('timeZone'))
       .locale(this.get('locale'))
       .format(format);
   },
+
   _getDatetime(date, format) {
     return moment(date)
       .tz(this.get('timeZone'))
       .locale(this.get('locale'))
       .format(format);
   },
+
   _setTime(newTime) {
     set(this, 'date', moment(get(this, 'date'))
       .tz(get(this, 'timeZone'))
       .set(newTime)
       .toDate());
   },
+
   _checkTimeLimit (timeString) {
     if ( timeString > get(this, '_maxTime') ) {
       this._setTime({
@@ -151,67 +88,5 @@ export default Ember.Component.extend({
   },
   _isDisabledHour(hour) {
     return (hour > get(this, '_maxHourTime') || hour < get(this, '_minHourTime'));
-  },
-  actions: {
-    showMinutePicker(hideCalendar) {
-      set(this, 'isShowMinutePicker', true);
-      this.send('hideHourPicker');
-      hideCalendar();
-    },
-    hideMinutePicker () {
-      set(this, 'isShowMinutePicker', false);
-    },
-    showHourPicker (hideCalendar) {
-      set(this, 'isShowHourPicker', true);
-      this.send('hideMinutePicker');
-      hideCalendar();
-    },
-    hideHourPicker () {
-      set(this, 'isShowHourPicker', false);
-    },
-    hideAllPickers() {
-      this.send('hideHourPicker');
-      this.send('hideMinutePicker');
-      return false;
-
-    },
-    selectHour({ value, disabled }) {
-      const minute = this._getTime('mm');
-      const newTimeString = `${this._formatTime(value)}:${minute}`;
-
-      if ( disabled ) {
-        return false;
-      }
-
-      if ( this._checkTimeLimit(newTimeString) ) {
-        this._setTime({hour: value});
-      }
-
-      this.send('hideHourPicker');
-    },
-    selectMinute({ value, disabled }) {
-      const hour = this._getTime('HH');
-      const newTimeString = `${hour}:${this._formatTime(value)}`;
-
-      if ( disabled ) {
-        return false;
-      }
-
-      if ( this._checkTimeLimit(newTimeString) ) {
-        this._setTime({minute: value});
-      }
-
-      this.send('hideMinutePicker');
-    }
-  },
-  init() {
-    this._super(...arguments);
-    const self = this;
-    $('html, body').click(() => {
-      self.send('hideAllPickers');
-    });
-  },
-  willDestroyElement() {
-    $('html, body').unbind();
   }
 });

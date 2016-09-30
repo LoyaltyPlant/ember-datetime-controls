@@ -1,29 +1,12 @@
-{{#private/input-control
+{{private/input-control
   date=date
   timeZone=timeZone
   format=format
   locale=locale
   isAmPm=isAmPm
-  showCalendar=(action 'show')
-  hideCalendar=(action 'hide')
   timeEnabled=true
   minTime=minTime
   maxTime=maxTime
   minDate=minDate
   maxDate=maxDate
 }}
-  {{#if _showControls}}
-      <div class="dt-control__container">
-        {{#if dateEnabled}}
-          {{private/calendar-control
-            date=date
-            minDate=minDate
-            maxDate=maxDate
-            disabledDates=disabledDates
-            timeZone=timeZone
-            locale=locale
-            onDateUpdated=(action 'updateDate')}}
-        {{/if}}
-      </div>
-  {{/if}}
-{{/private/input-control}}

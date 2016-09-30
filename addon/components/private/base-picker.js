@@ -10,7 +10,7 @@ const {
 
 export default Ember.Component.extend({
   layout,
-
+  isControlsUp: false,
   locale: window.navigator.userLanguage || window.navigator.language || "en",
   timeZone: null,
   format: null,
@@ -24,35 +24,47 @@ export default Ember.Component.extend({
   timeEnabled: true,
   dateEnabled: true,
 
-  _showControls: false,
+  isShowCalendar: false,
 
   actions: {
-    show() {
-      this.set('_showControls', true);
+    showCalendar() {
+      set(this, 'isShowCalendar', true);
+      this.send('hideMinutePicker');
+      this.send('hideHourPicker');
     },
-    hide() {
-      this.set('_showControls', false);
+    hideCalendar() {
+      set(this, 'isShowCalendar', false);
     },
     updateDate(dateProperties) {
-      let newDate = moment.tz(this.get('date'), this.get('timeZone')).set(dateProperties);
+      let newDate = moment.tz(get(this, 'date'), get(this, 'timeZone')).set(dateProperties);
 
-      if (!this.get('timeEnabled')) {
+      if (!get(this, 'timeEnabled')) {
         newDate = newDate.startOf('date');
       }
-
-      this.set('date', newDate.toDate());
-      this.send('hide');
+      set(this, 'date', newDate.toDate());
+      this.send('hideCalendar');
+    },
+    showMinutePicker() {
+      set(this, 'isShowMinutePicker', true);
+      this.send('hideHourPicker');
+      this.send('hideCalendar');
+    },
+    hideMinutePicker () {
+      set(this, 'isShowMinutePicker', false);
+    },
+    showHourPicker () {
+      set(this, 'isShowHourPicker', true);
+      this.send('hideMinutePicker');
+      this.send('hideCalendar');
+    },
+    hideHourPicker () {
+      set(this, 'isShowHourPicker', false);
+    },
+    hideAllPickers() {
+      this.send('hideHourPicker');
+      this.send('hideMinutePicker');
+      this.send('hideCalendar');
     }
-  },
-  init() {
-    const self = this;
-    this._super(...arguments);
-    $('html, body').click(() => {
-      self.send('hide');
-    });
-  },
-  willDestroy() {
-    $('html, body').unbind();
   },
   didReceiveAttrs() {
     this._super(...arguments);

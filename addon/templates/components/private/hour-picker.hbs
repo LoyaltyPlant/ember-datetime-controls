@@ -1,0 +1,7 @@
+<div class="dt-control__time-list">
+  {{#each hours as |hour|}}
+      <div class="dt-control__time {{if hour.disabled 'disabled'}}" {{action 'selectHour' hour bubbles=false}}>
+        {{hour.title}}
+      </div>
+  {{/each}}
+</div>

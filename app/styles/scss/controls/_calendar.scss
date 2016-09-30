@@ -11,6 +11,10 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: 19px 0 25px 0;
   z-index: 9;
+  cursor: default;
+  .controls-up & {
+    background: red;
+  }
 }
 
 .dt-control__calendar {
@@ -29,6 +33,7 @@
 
   &__prev-month, &__next-month {
     color: #467ab2;
+    cursor: pointer;
   }
 }
 
@@ -62,6 +67,9 @@
   font-size: 12px;
   cursor: pointer;
   border: 1px solid transparent;
+  &:not(.disabled):hover {
+    border: 1px solid #2f79b9;
+  }
 }
 
 .dt-control__date.current {

@@ -1,34 +1,10 @@
-<div class="dt-control__input dt-control__timepicker" {{action 'showHourPicker' (action hideCalendar) bubbles=false}}>
-  <div class="dt-control__current-time">
-    {{currentHours}} &nbsp;<span class="icon-dropdown icon"></span>
-  </div>
-  {{#if isShowHourPicker}}
-      <div class="dt-control__time-list">
-        {{#each hours as |hour|}}
-            <div class="dt-control__time {{if hour.disabled 'disabled'}}" {{action 'selectHour' hour bubbles=false}}>
-              {{hour.title}}
-            </div>
-        {{/each}}
-      </div>
-  {{/if}}
-</div>
-<div class="dt-control__input dt-control__timepicker" {{action 'showMinutePicker' (action hideCalendar) bubbles=false}}>
-  <div class="dt-control__current-time">
-    {{currentMinute}} &nbsp;<span class="icon-dropdown icon"></span>
-  </div>
-  {{#if isShowMinutePicker}}
-      <div class="dt-control__time-list">
-        {{#each minutes as |minute|}}
-            <div class="dt-control__time dt-control__time-minutes  {{if minute.disabled 'disabled'}}" {{action 'selectMinute' minute bubbles=false}}>
-              {{minute.title}}
-            </div>
-        {{/each}}
-      </div>
-  {{/if}}
-</div>
-{{#if isAmPm}}
-    <div class="dt-control__input dt-control__meridiem">
-      {{meridiem}}
+{{#if isShowMinutePicker}}
+    <div class="dt-control__time-list">
+      {{#each minutes as |minute|}}
+          <div class="dt-control__time dt-control__time-minutes  {{if minute.disabled 'disabled'}}" {{action 'selectMinute' minute bubbles=false}}>
+            {{minute.title}}
+          </div>
+      {{/each}}
     </div>
 {{/if}}
 

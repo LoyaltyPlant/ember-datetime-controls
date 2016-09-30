@@ -1,19 +1,24 @@
-<div class="dt-control__calendar-header">
-    <span class="icon icon-previous dt-control__prev-month" {{action 'previousMonth' bubbles=false}}></span> {{monthLabel}} {{_year}} <span class="icon icon-next dt-control__next-month" {{action 'nextMonth' bubbles=false}}></span>
-</div>
-<div class="dt-control__calendar-weekdays">
-  {{#each _weekDays as |weekDay|}}
-      <span class="dt-control__weekday {{if weekDay.weekend 'dt-control__weekend'}}">{{weekDay.weekDay}}</span>
-  {{/each}}
-</div>
-<div class="dt-control__calendar-dates">
-  {{#each weeks as |week|}}
-      <div class="dt-control__week">
-        {{#each week.dates as |date|}}
-
-          {{log date}}
-            <span class="dt-control__date {{if date.weekend 'dt-control__weekend'}}  {{if date.disabled 'disabled'}} {{if (eq _selectedDate date) 'selected'}} {{if date.current 'current'}}" {{action 'setDate' date}}>{{date.index}}</span>
-        {{/each}}
-      </div>
-  {{/each}}
+<div class="dt-control__calendar">
+    <div class="dt-control__calendar-header">
+        <span class="icon icon-previous dt-control__prev-month" {{action 'previousMonth'
+                                                                         bubbles=false}}></span> {{monthLabel}} {{_year}}
+        <span class="icon icon-next dt-control__next-month" {{action 'nextMonth' bubbles=false}}></span>
+    </div>
+    <div class="dt-control__calendar-weekdays">
+      {{#each _weekDays as |weekDay|}}
+          <span class="dt-control__weekday {{if weekDay.weekend 'dt-control__weekend'}}">{{weekDay.weekDay}}</span>
+      {{/each}}
+    </div>
+    <div class="dt-control__calendar-dates">
+      {{#each weeks as |week|}}
+          <div class="dt-control__week">
+            {{#each week.dates as |date|}}
+                <span class="dt-control__date {{if date.weekend 'dt-control__weekend'}}  {{if date.disabled
+                                                                                              'disabled'}} {{if
+                  (eq _selectedDate date) 'selected'}} {{if date.current 'current'}}" {{action 'setDate' date
+                                                                                               bubbles=false}}>{{date.index}}</span>
+            {{/each}}
+          </div>
+      {{/each}}
+    </div>
 </div>

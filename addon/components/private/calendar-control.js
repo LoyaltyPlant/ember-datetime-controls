@@ -2,6 +2,8 @@ import Ember from "ember";
 import moment from "moment";
 import {getLocaleWeekDays, getLocaleFirstDayOfWeek} from "ember-datetime-controls/utils/locale";
 import layout from "ember-datetime-controls/templates/components/private/calendar-control";
+import BaseControl from './control';
+
 
 const {
   get,
@@ -12,9 +14,8 @@ const WEEK = Ember.Object.extend({
   dates: null
 });
 
-export default Ember.Component.extend({
+export default BaseControl.extend({
   layout,
-
   locale: null,
   date: null,
   minDate: null,
@@ -27,7 +28,7 @@ export default Ember.Component.extend({
   _year: null,
   _selectedDate: null,
 
-  classNames: ['dt-control__calendar'],
+  classNames: ['dt-control__container'],
 
   init() {
     this._super(...arguments);
@@ -151,6 +152,10 @@ export default Ember.Component.extend({
 
     weeks.forEach(week => {
       week.get('dates').forEach((date, index) => {
+
+
+
+
         if (date.index === currentMonthDate) {
           date.current = true;
         }
@@ -167,7 +172,7 @@ export default Ember.Component.extend({
 
 
 
-        if (disabledMonthDates.contains(date.index)) {
+        if (disabledMonthDates.contains(date.index) || !date.index) {
           date.disabled = true;
         }
       });

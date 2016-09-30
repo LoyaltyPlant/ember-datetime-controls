@@ -1,0 +1,21 @@
+
+.dt-control__timepicker {
+
+  &-container {
+    float: right;
+  }
+}
+
+.dt-control__input-timepicker {
+  box-sizing: border-box;
+  border-left: 1px solid #d5d7da;
+  padding: 10px  7px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  max-width: 54px;
+  position: relative;
+}
+
+.dt-control__meridiem {
+  cursor: default;
+}
