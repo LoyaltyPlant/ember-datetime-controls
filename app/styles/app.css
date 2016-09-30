@@ -103,7 +103,7 @@
 
 .controls-up.dt-control__container {
   top: -241px; }
-.controls-up .dt-control__time-list {
+.controls-up.dt-control__time-list {
   top: -231px; }
 
 .dt-control__container {

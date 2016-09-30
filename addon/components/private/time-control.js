@@ -12,7 +12,7 @@ const {
 
 //TODO: Перенести disabled в шаблон
 export default BaseControl.extend({
-  classNames: ['picker-container'],
+  classNames: ['dt-control__time-list'],
   _minTime: computed('minDate', function () {
     const minTime = get(this, 'minTime');
     const minDate = get(this, 'minDate');
