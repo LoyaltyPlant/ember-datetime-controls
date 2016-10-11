@@ -52,7 +52,7 @@ export default BasePicker.extend({
     });
   },
   willDestroyElement() {
-    $('html, body').unbind();
+    $('html, body').unbind('click');
   }
 
 });
