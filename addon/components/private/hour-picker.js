@@ -58,6 +58,11 @@ export default TimeControl.extend({
       }
 
       this.sendAction('hide');
+
+      if ( this.get('onTimeChange') ) {
+        this.get('onTimeChange')(this.get('date'));
+      }
+
     }
   }
 });

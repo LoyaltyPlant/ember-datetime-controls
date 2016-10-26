@@ -10,6 +10,7 @@
           timeZone=timeZone
           locale=locale
           onDateUpdated=(action 'updateDate')
+          onDateChange=onDateChange
         }}
       {{/if}}
     </div>
@@ -20,7 +21,7 @@
           {{currentHours}} &nbsp;<span class="icon-dropdown icon"></span>
           {{#if isShowHourPicker}}
             {{private/hour-picker timeZone=timeZone locale=locale date=date minDate=minDate maxDate=maxDate
-                                  minTime=minTime maxTime=maxTime hide=(action 'hideHourPicker')}}
+                                  minTime=minTime maxTime=maxTime hide=(action 'hideHourPicker') onTimeChange=onTimeChange}}
           {{/if}}
         </div>
     </div>
@@ -29,7 +30,7 @@
           {{currentMinute}} &nbsp;<span class="icon-dropdown icon"></span>
           {{#if isShowMinutePicker}}
             {{private/minute-picker timeZone=timeZone locale=locale date=date minDate=minDate maxDate=maxDate
-                                    minTime=minTime maxTime=maxTime hide=(action 'hideMinutePicker')}}
+                                    minTime=minTime maxTime=maxTime hide=(action 'hideMinutePicker') onTimeChange=onTimeChange}}
           {{/if}}
         </div>
     </div>
