@@ -69,30 +69,33 @@
 
 .dt-control__input-group {
   display: flex;
-  border: 1px solid #d5d7da;
+  border-left: 1px solid #d5d7da;
+  border-right: none;
   position: relative;
-  width: auto;
+  max-width: 302px;
   border-radius: 2px;
-  justify-content: space-between; }
+  justify-content: flex-start; }
 
 .dt-control__input {
   padding: 10px;
-  cursor: pointer; }
+  cursor: pointer;
+  border: 1px solid #d5d7da;
+  border-left: none; }
+  .dt-control__input:last-child {
+    border-right: 1px solid #d5d7da; }
 
 .dt-control__input-calendar {
-  flex-basis: 170px;
-  flex-grow: 1; }
+  flex-basis: 152px; }
 
 .dt-control__timepicker-container {
   float: right; }
 
 .dt-control__input-timepicker {
   box-sizing: border-box;
-  border-left: 1px solid #d5d7da;
   padding: 10px  7px;
   flex-grow: 1;
   flex-shrink: 1;
-  max-width: 54px;
+  max-width: 47px;
   position: relative; }
 
 .dt-control__meridiem {
@@ -108,7 +111,7 @@
 
 .dt-control__container {
   position: absolute;
-  width: 320px;
+  width: 300px;
   top: 42px;
   left: 0;
   background-color: white;
