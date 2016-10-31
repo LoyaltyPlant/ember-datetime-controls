@@ -12,6 +12,7 @@ export default Ember.Route.extend({
       berlinDate = moment.tz('Europe/Berlin').toDate(),
       moscowDate = moment.tz('Europe/Moscow').toDate();
 
+    const datesList = Ember.A([new Date(), new Date()]);
     disabledDates.push(tommorrowDate);
 
     return {
@@ -23,7 +24,8 @@ export default Ember.Route.extend({
       disabledDates,
       todayDate,
       minDate: moment().subtract(2, 'days').startOf('day').toDate(),
-      maxDate: moment().add(2, 'days').startOf('day').toDate()
+      maxDate: moment().add(2, 'days').startOf('day').toDate(),
+      datesList
     };
   }
 });

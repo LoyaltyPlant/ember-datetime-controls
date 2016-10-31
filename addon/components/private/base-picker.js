@@ -34,6 +34,7 @@ export default Ember.Component.extend({
     },
     hideCalendar() {
       set(this, 'isShowCalendar', false);
+
     },
     updateDate(dateProperties) {
       let newDate = moment.tz(get(this, 'date'), get(this, 'timeZone')).set(dateProperties);
@@ -51,6 +52,7 @@ export default Ember.Component.extend({
     },
     hideMinutePicker () {
       set(this, 'isShowMinutePicker', false);
+
     },
     showHourPicker () {
       set(this, 'isShowHourPicker', true);

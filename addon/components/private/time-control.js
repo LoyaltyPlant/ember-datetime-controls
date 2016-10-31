@@ -88,5 +88,8 @@ export default BaseControl.extend({
   },
   _isDisabledHour(hour) {
     return (hour > get(this, '_maxHourTime') || hour < get(this, '_minHourTime'));
+  },
+  init() {
+    this._super(...arguments);
   }
 });

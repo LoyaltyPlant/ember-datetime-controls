@@ -26,6 +26,8 @@ export default BasePicker.extend({
       .format(this.get('format'));
   }),
 
+  documentClickHandler: null,
+
   currentHours: computed('date', function () {
     const format = (get(this, 'isAmPm')) ? 'hh' : 'HH';
     return this._getDatetime(format);
@@ -44,15 +46,18 @@ export default BasePicker.extend({
       .locale(this.get('locale'))
       .format(format);
   },
+  hidePickers() {
+    this.send('hideAllPickers');
+  },
   init() {
     this._super(...arguments);
-    const self = this;
-    $('html, body').click(() => {
-      self.send('hideAllPickers');
-    });
+    set(this, 'documentClickHandler', this.hidePickers.bind(this));
+    document.addEventListener('click', get(this,'documentClickHandler'));
   },
+
   willDestroyElement() {
-    $('html, body').unbind('click');
+    this._super(...arguments);
+    document.removeEventListener('click', get(this,'documentClickHandler'));
   }
 
 });

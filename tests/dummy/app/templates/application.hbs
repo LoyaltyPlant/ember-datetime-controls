@@ -1,105 +1,13 @@
-<h2>Case 1. Текущее время</h2>
-<ul>
-    <li>minTime = 04:30</li>
-    <li>maxTime = 22:40</li>
-    <li>minDate = -2 дня от текущего</li>
-    <li>maxDate = +2 дня от текущего</li>
-</ul>
-<div style="width:320px; float:left;">
-    <h2>Europe/Moscow</h2>
+<h2>Перечисления</h2>
+{{#each model.datesList as |date|}}
   {{date-picker
-  date=model.moscowDate
-  minDate=model.minDate
-  maxDate=model.maxDate
-  minTime='04:30'
-  maxTime='22:40'
-  format="LL"
-  locale="ru"
-  timeZone="Europe/Moscow"
-  timeEnabled=false}}
-</div>
-<div style="width:320px; float:left;">
-    <h2>Europe/Moscow</h2>
-  {{date-picker
-    date=model.moscowDate
-    minDate=model.minDate
-    maxDate=model.maxDate
-    minTime='04:30'
+    date=date
     maxTime='22:40'
     format="LL"
-    locale="ru"
     timeZone="Europe/Moscow"
-    timeEnabled=true}}
-</div>
+    timeEnabled=true
+    dateEnabled=false}}
+  <span {{action "delete" date}}>x</span>
+{{/each}}
 
-<div style="width:320px; float:left;">
-    <h2>Europe/SPB</h2>
-  {{date-picker
-    onTimeChange=(action "onTimeChange")
-    date=model.moscowDate
-    minDate=model.minDate
-    maxDate=model.maxDate
-    dateEnabled=false
-    minTime='04:30'
-    maxTime='22:40'
-    format="LL"
-    locale="ru"
-    timeZone="Europe/Moscow"}}
-</div>
-
-<div style="clear: both"></div>
-<br><br><br><br>
-
-
-<h2>Case 2. Время в Нью-Йорке</h2>
-<ul>
-    <li>disabledDates = today</li>
-</ul>
-<div style="width:320px; float:left;">
-    <h2>America/New_York</h2>
-  {{date-picker
-    date=model.newYorkDate
-    disabledDates=model.disabledDates
-    format="LL"
-    locale="en"
-    timeZone="America/New_York"}}
-</div>
-
-
-<div style="clear: both"></div>
-<br><br><br><br>
-
-
-<h2>Case 3. Datepicker. Ограничения для 2-го календаря</h2>
-<ul>
-    <li>minTime=10:30</li>
-    <li>maxTime=19:55</li>
-    <li>при выборе дате в первом календаре, автоматически проставляется огранчение на втором календарь</li>
-    <li>т.е. если выбрать дату на первом календаре 21.09.2016, то minDate на втором календаре будет равно 21.09.2016</li>
-    <li>а также, если выбрать время 15:30 на первом календаре, то minTime на втором календаре будет 15:30</li>
-</ul>
-
-<div style="width:320px; float:left;">
-    <h2>America/Chicago</h2>
-  {{date-picker
-    date=model.todayDate
-    format="LL"
-    locale="en"
-    timeZone="America/Chicago"}}
-</div>
-
-<div style="width:320px; float:left;">
-    <h2>America/Chicago</h2>
-  {{date-picker
-    format="LL"
-    locale="en"
-    minTime='10:30'
-    maxTime='19:55'
-    minDate=model.todayDate
-    timeZone="America/Chicago"}}
-</div>
-
-<div style="width: 100%; height: 1500px">
-
-</div>
 
