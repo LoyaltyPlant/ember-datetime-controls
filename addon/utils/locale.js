@@ -6,12 +6,19 @@ export function getLocaleFirstDayOfWeek(locale) {
 }
 
 export function getLocaleWeekDays(locale) {
-  let firstDayOfWeek = getLocaleFirstDayOfWeek(locale),
-      weekDays = Ember.A(moment.localeData(locale)._weekdaysMin);
+  const firstDayOfWeek = getLocaleFirstDayOfWeek(locale);
+  const weekDays = Ember.A(moment.localeData(locale)._weekdaysMin);
 
   weekDays.push(weekDays[0]);
 
   return weekDays.slice(firstDayOfWeek, firstDayOfWeek ? 8 : 7);
+}
+
+export function isAmPm(locale) {
+  return !!moment()
+    .locale(locale)
+    .format('LT')
+    .match(/(AM|PM)/g);
 }
 
 export default {

@@ -1,0 +1,39 @@
+<p>Locale: {{locale}} - {{timeZone}}</p>
+<p>
+  Choosed date
+  <strong>{{moment-format model.newYorkDate "LLL" locale=locale timeZone=timeZone}}</strong>
+</p>
+
+<br/>
+
+<div class="row">
+  <div class="col-xs-6">
+    {{date-picker
+        date=date
+        timeZone=timeZone
+        locale=locale
+        onchange=onchange
+    }}
+  </div>
+  <div class="col-xs-6">
+    {{time-picker
+        date=date
+        timeZone=timeZone
+        locale=locale
+        onchange=onchange
+    }}
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+  <div class="col-xs-12">
+    {{datetime-picker
+        date=date
+        timeZone=timeZone
+        locale=locale
+        onchange=onchange
+    }}
+  </div>
+</div>

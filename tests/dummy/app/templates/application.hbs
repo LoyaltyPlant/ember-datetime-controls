@@ -6,54 +6,21 @@
 
     <div class="col-sm-4">
         <div class="box">
-            <p>Locale: en-US - America/NewYork</p>
-            <p>Choosed date <strong>{{moment-format model.newYorkDate 'LLL'}}</strong></p>
-
-            <br/>
-
-            <div class="row">
-                <div class="col-xs-6">
-                  {{date-picker
-                      date=model.newYorkDate
-                      timeZone="America/New_York"
-                      locale="en-US"
-                      onchange=(action (mut model.newYorkDate))
-                  }}
-                </div>
-                <div class="col-xs-6">
-                  {{time-picker
-                      date=model.newYorkDate
-                      timeZone="America/New_York"
-                      locale="en-US"
-                      onchange=(action (mut model.newYorkDate))
-                  }}
-                </div>
-            </div>
-
-            <br>
-
-            <div class="row">
-                <div class="col-xs-12">
-                  {{datetime-picker
-                      date=model.newYorkDate
-                      timeZone="America/New_York"
-                      locale="en-US"
-                      onchange=(action (mut model.newYorkDate))
-                  }}
-                </div>
-            </div>
+            {{all-pickers-block
+                date=model.newYorkDate
+                locale="en-US"
+                timeZone="America/New_Yourk"
+                onchange=(action (mut model.newYourkDate))
+            }}
         </div>
     </div>
 
     <div class="col-sm-4">
         <div class="box">
-            <p>Locale: de - Europe/Berlin</p>
-            <p>Choosed date <strong>{{moment-format model.berlinDate 'LLL'}}</strong></p>
-
-            {{datetime-picker
+            {{all-pickers-block
                 date=model.berlinDate
-                timeZone="America/New_York"
                 locale="de"
+                timeZone="Europe/Berlin"
                 onchange=(action (mut model.berlinDate))
             }}
         </div>
@@ -61,10 +28,7 @@
 
     <div class="col-sm-4">
         <div class="box">
-            <p>Locale: ru - Europe/Moscow</p>
-            <p>Choosed date <strong>{{moment-format model.moscowDate 'LLL'}}</strong></p>
-
-            {{datetime-picker
+            {{all-pickers-block
                 date=model.moscowDate
                 locale="ru"
                 timeZone="Europe/Moscow"
