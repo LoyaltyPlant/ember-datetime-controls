@@ -10,7 +10,6 @@ const {
   $
 } = Ember;
 
-
 export default BasePicker.extend({
   layout,
   classNames: ['dt-control__input-group'],
@@ -18,46 +17,55 @@ export default BasePicker.extend({
   timeZone: null,
   date: null,
   format: null,
+  documentClickHandler: null,
 
-  formattedDate: computed('date', function() {
+  formattedDate: computed('date', function () {
+    const date = get(this, 'date');
+    
     return moment(this.get('date'))
       .tz(this.get('timeZone'))
       .locale(this.get('locale'))
       .format(this.get('format'));
   }),
 
-  documentClickHandler: null,
-
-  currentHours: computed('date', function () {
-    const format = (get(this, 'isAmPm')) ? 'hh' : 'HH';
-    return this._getDatetime(format);
-  }),
-  currentMinute: computed('date', function () {
-    return this._getDatetime('mm');
+  currentHours: computed('date', {
+    get() {
+      const format = (get(this, 'isAmPm')) ? 'hh' : 'HH';
+      return this._getDatetime(format);
+    }
   }),
 
-  meridiem: computed('date', function () {
-    return this._getDatetime('a');
+  currentMinute: computed('date', {
+    get() {
+      return this._getDatetime('mm');
+    }
   }),
 
-  _getDatetime(format) {
-    return moment(this.get('date'))
-      .tz(this.get('timeZone'))
-      .locale(this.get('locale'))
-      .format(format);
-  },
-  hidePickers() {
-    this.send('hideAllPickers');
-  },
+  meridiem: computed('date', {
+    get() {
+      return this._getDatetime('a');
+    }
+  }),
+
   init() {
     this._super(...arguments);
     set(this, 'documentClickHandler', this.hidePickers.bind(this));
-    document.addEventListener('click', get(this,'documentClickHandler'));
+    document.addEventListener('click', get(this, 'documentClickHandler'));
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    document.removeEventListener('click', get(this,'documentClickHandler'));
-  }
+    document.removeEventListener('click', get(this, 'documentClickHandler'));
+  },
 
+  _getDatetime(format) {
+    return moment(get(this, 'date'))
+      .tz(get(this, 'timeZone'))
+      .locale(get(this, 'locale'))
+      .format(format);
+  },
+  
+  hidePickers() {
+    this.send('hideAllPickers');
+  }
 });

@@ -13,10 +13,13 @@
       {{#each weeks as |week|}}
           <div class="dt-control__week">
             {{#each week.dates as |date|}}
-                <span class="dt-control__date {{if date.weekend 'dt-control__weekend'}}  {{if date.disabled
-                                                                                              'disabled'}} {{if
-                  (eq _selectedDate date) 'selected'}} {{if date.current 'current'}}" {{action 'setDate' date
-                                                                                               bubbles=false}}>{{date.index}}</span>
+                <span class="dt-control__date
+                {{if date.weekend 'dt-control__weekend'}}
+                {{if date.disabled 'disabled'}}
+                {{if (eq _selectedDate date) 'selected'}}
+                {{if date.current 'current'}}"
+                {{action 'setDate' date bubbles=false}}>
+                {{date.index}}</span>
             {{/each}}
           </div>
       {{/each}}

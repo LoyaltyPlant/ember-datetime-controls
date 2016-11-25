@@ -5,16 +5,16 @@ import layout from "ember-datetime-controls/templates/components/private/base-pi
 const {
   get,
   set,
-  $
 } = Ember;
 
 export default Ember.Component.extend({
   layout,
+  date: null,
+  format: null,
+
   isControlsUp: false,
   locale: window.navigator.userLanguage || window.navigator.language || "en",
   timeZone: null,
-  format: null,
-  date: new Date(),
   minDate: null,
   maxDate: null,
   disabledDates: null,
@@ -23,7 +23,6 @@ export default Ember.Component.extend({
   isAmPm: null,
   timeEnabled: true,
   dateEnabled: true,
-
   isShowCalendar: false,
 
   actions: {
@@ -32,10 +31,11 @@ export default Ember.Component.extend({
       this.send('hideMinutePicker');
       this.send('hideHourPicker');
     },
+
     hideCalendar() {
       set(this, 'isShowCalendar', false);
-
     },
+
     updateDate(dateProperties) {
       let newDate = moment.tz(get(this, 'date'), get(this, 'timeZone')).set(dateProperties);
 
@@ -45,29 +45,34 @@ export default Ember.Component.extend({
       set(this, 'date', newDate.toDate());
       this.send('hideCalendar');
     },
+
     showMinutePicker() {
       set(this, 'isShowMinutePicker', true);
       this.send('hideHourPicker');
       this.send('hideCalendar');
     },
+
     hideMinutePicker () {
       set(this, 'isShowMinutePicker', false);
-
     },
+
     showHourPicker () {
       set(this, 'isShowHourPicker', true);
       this.send('hideMinutePicker');
       this.send('hideCalendar');
     },
+
     hideHourPicker () {
       set(this, 'isShowHourPicker', false);
     },
+
     hideAllPickers() {
       this.send('hideHourPicker');
       this.send('hideMinutePicker');
       this.send('hideCalendar');
     }
   },
+
   didReceiveAttrs() {
     this._super(...arguments);
     set(this, 'isAmPm', !!moment(this.get('date'))

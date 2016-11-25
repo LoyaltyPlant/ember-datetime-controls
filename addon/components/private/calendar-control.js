@@ -4,7 +4,6 @@ import {getLocaleWeekDays, getLocaleFirstDayOfWeek} from "ember-datetime-control
 import layout from "ember-datetime-controls/templates/components/private/calendar-control";
 import BaseControl from './control';
 
-
 const {
   get,
   set
@@ -71,7 +70,6 @@ export default BaseControl.extend({
     } else {
       return moment.tz(get(this, 'timeZone')).locale(locale)._locale._months.standalone[get(this, '_month')];
     }
-
   }),
 
   weeks: Ember.computed('_month', '_year', 'minDate', 'maxDate', function () {
@@ -90,8 +88,7 @@ export default BaseControl.extend({
       minDate = this.get('minDate') ? moment.tz(this.get('minDate'), timeZone) : null,
       maxDate = this.get('maxDate') ? moment.tz(this.get('maxDate'), timeZone) : null;
 
-    let
-      firstWeek = WEEK.create({dates: []}),
+    let firstWeek = WEEK.create({dates: []}),
       disabledMonthDates = Ember.A(),
       currentMonthDate;
 
@@ -152,10 +149,6 @@ export default BaseControl.extend({
 
     weeks.forEach(week => {
       week.get('dates').forEach((date, index) => {
-
-
-
-
         if (date.index === currentMonthDate) {
           date.current = true;
         }
@@ -169,10 +162,7 @@ export default BaseControl.extend({
             date.weekend = true;
           }
         }
-
-
-
-        if (disabledMonthDates.contains(date.index) || !date.index) {
+        if (disabledMonthDates.includes(date.index) || !date.index) {
           date.disabled = true;
         }
       });
@@ -191,6 +181,7 @@ export default BaseControl.extend({
       Ember.set(this, '_selectedDate', date);
       this.attrs.onDateUpdated(newDate);
     },
+
     previousMonth() {
       let yearMonth = moment.tz([this.get('_year'), this.get('_month')], this.get('timeZone')).subtract(1, 'months');
       this.setProperties({
@@ -198,6 +189,7 @@ export default BaseControl.extend({
         _month: yearMonth.month()
       });
     },
+
     nextMonth() {
       let yearMonth = moment.tz([this.get('_year'), this.get('_month')], this.get('timeZone')).add(1, 'months');
       this.setProperties({
@@ -206,5 +198,4 @@ export default BaseControl.extend({
       });
     }
   }
-
 });

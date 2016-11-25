@@ -44,6 +44,7 @@ export default TimeControl.extend({
 
     return hours;
   }),
+  
   actions: {
     selectHour({ value, disabled }) {
       const minute = this._getTime('mm');

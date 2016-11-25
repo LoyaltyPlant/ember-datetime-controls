@@ -1,16 +1,16 @@
 {{#if dateEnabled}}
     <div class="dt-control__input dt-control__input-calendar" {{action 'showCalendar' bubbles=false}}>
-      {{formattedDate}}
-      {{#if isShowCalendar}}
+
+      {{#if isShowCalendar}} {{formattedDate}}
         {{private/calendar-control
-          date=date
-          minDate=minDate
-          maxDate=maxDate
-          disabledDates=disabledDates
-          timeZone=timeZone
-          locale=locale
-          onDateUpdated=(action 'updateDate')
-          onDateChange=onDateChange
+            date=date
+            minDate=minDate
+            maxDate=maxDate
+            disabledDates=disabledDates
+            timeZone=timeZone
+            locale=locale
+            onDateUpdated=(action 'updateDate')
+            onDateChange=onDateChange
         }}
       {{/if}}
     </div>
@@ -20,8 +20,17 @@
         <div class="dt-control__current-time">
           {{currentHours}} &nbsp;<span class="icon-dropdown icon"></span>
           {{#if isShowHourPicker}}
-            {{private/hour-picker timeZone=timeZone locale=locale date=date minDate=minDate maxDate=maxDate
-                                  minTime=minTime maxTime=maxTime hide=(action 'hideHourPicker') onTimeChange=onTimeChange}}
+            {{private/hour-picker
+                timeZone=timeZone
+                locale=locale
+                date=date
+                minDate=minDate
+                maxDate=maxDate
+                minTime=minTime
+                maxTime=maxTime
+                hide=(action 'hideHourPicker')
+                onTimeChange=onTimeChange
+            }}
           {{/if}}
         </div>
     </div>
@@ -29,8 +38,17 @@
         <div class="dt-control__current-time">
           {{currentMinute}} &nbsp;<span class="icon-dropdown icon"></span>
           {{#if isShowMinutePicker}}
-            {{private/minute-picker timeZone=timeZone locale=locale date=date minDate=minDate maxDate=maxDate
-                                    minTime=minTime maxTime=maxTime hide=(action 'hideMinutePicker') onTimeChange=onTimeChange}}
+            {{private/minute-picker
+                timeZone=timeZone
+                locale=locale
+                date=date
+                minDate=minDate
+                maxDate=maxDate
+                minTime=minTime
+                maxTime=maxTime
+                hide=(action 'hideMinutePicker')
+                onTimeChange=onTimeChange
+            }}
           {{/if}}
         </div>
     </div>
