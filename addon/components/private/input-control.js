@@ -1,7 +1,7 @@
 import Ember from "ember";
 import moment from "moment";
 import layout from "ember-datetime-controls/templates/components/private/input-control";
-import BasePicker from './base-picker';
+import BasePicker from "./base-picker";
 
 const {
   computed,
@@ -20,9 +20,7 @@ export default BasePicker.extend({
   documentClickHandler: null,
 
   formattedDate: computed('date', function () {
-    const date = get(this, 'date');
-    
-    return moment(this.get('date'))
+    return moment(get(this, 'date'))
       .tz(this.get('timeZone'))
       .locale(this.get('locale'))
       .format(this.get('format'));
@@ -64,7 +62,7 @@ export default BasePicker.extend({
       .locale(get(this, 'locale'))
       .format(format);
   },
-  
+
   hidePickers() {
     this.send('hideAllPickers');
   }

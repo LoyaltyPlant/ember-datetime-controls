@@ -1,19 +1,19 @@
 {{#if dateEnabled}}
     <div class="dt-control__input dt-control__input-calendar" {{action 'showCalendar' bubbles=false}}>
-
-      {{#if isShowCalendar}} {{formattedDate}}
-        {{private/calendar-control
-            date=date
-            minDate=minDate
-            maxDate=maxDate
-            disabledDates=disabledDates
-            timeZone=timeZone
-            locale=locale
-            onDateUpdated=(action 'updateDate')
-            onDateChange=onDateChange
-        }}
-      {{/if}}
+      {{formattedDate}}
     </div>
+    {{#if isShowCalendar}}
+      {{private/calendar-control
+          date=date
+          minDate=minDate
+          maxDate=maxDate
+          disabledDates=disabledDates
+          timeZone=timeZone
+          locale=locale
+          onDateUpdated=(action 'updateDate')
+          onDateChange=onDateChange
+      }}
+    {{/if}}
 {{/if}}
 {{#if timeEnabled}}
     <div class="dt-control__input dt-control__input-timepicker" {{action 'showHourPicker' bubbles=false}}>

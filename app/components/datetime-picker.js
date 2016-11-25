@@ -1,1 +1,1 @@
-export { default } from 'ember-datetime-controls/components/private/base-picker';
+export { default } from 'ember-datetime-controls/components/datetime-picker';

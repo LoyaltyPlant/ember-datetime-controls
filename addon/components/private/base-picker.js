@@ -1,5 +1,6 @@
 import Ember from "ember";
 import moment from "moment";
+import EmberDateTimeControlsConfig from "ember-datetime-controls/config";
 import layout from "ember-datetime-controls/templates/components/private/base-picker";
 
 const {
@@ -10,20 +11,33 @@ const {
 export default Ember.Component.extend({
   layout,
   date: null,
-  format: null,
-
-  isControlsUp: false,
-  locale: window.navigator.userLanguage || window.navigator.language || "en",
-  timeZone: null,
-  minDate: null,
-  maxDate: null,
-  disabledDates: null,
-  minTime: null,
-  maxTime: null,
-  isAmPm: null,
-  timeEnabled: true,
   dateEnabled: true,
+  disabledDates: null,
+  format: EmberDateTimeControlsConfig.format,
+  isAmPm: null,
+  isControlsUp: false,
   isShowCalendar: false,
+  locale: EmberDateTimeControlsConfig.locale,
+  maxDate: null,
+  maxTime: null,
+  minDate: null,
+  minTime: null,
+  timeEnabled: true,
+  timeZone: EmberDateTimeControlsConfig.timeZone,
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    set(this, 'isAmPm', !!moment()
+      .locale(get(this, 'locale'))
+      .format('LT')
+      .match(/(AM|PM)/g)
+    );
+  },
+
+  onchange(date) {
+    set(this, 'date', date);
+  },
 
   actions: {
     showCalendar() {
@@ -42,7 +56,11 @@ export default Ember.Component.extend({
       if (!get(this, 'timeEnabled')) {
         newDate = newDate.startOf('date');
       }
-      set(this, 'date', newDate.toDate());
+      if (this.onchange) {
+        this.onchange(newDate.toDate());
+      } else {
+        Ember.Logger.warn('Not implemented "onchange" callback');
+      }
       this.send('hideCalendar');
     },
 
@@ -71,15 +89,6 @@ export default Ember.Component.extend({
       this.send('hideMinutePicker');
       this.send('hideCalendar');
     }
-  },
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    set(this, 'isAmPm', !!moment(this.get('date'))
-      .tz(get(this, 'timeZone'))
-      .locale(get(this, 'locale'))
-      .format('LT')
-      .match(/(AM|PM)/g)
-    );
   }
+
 });

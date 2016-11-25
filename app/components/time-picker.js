@@ -1,5 +1,1 @@
-import BasePicker from 'ember-datetime-controls/components/private/base-picker';
-
-export default BasePicker.extend({
-  dateEnabled: false
-});
+export { default } from 'ember-datetime-controls/components/time-picker';

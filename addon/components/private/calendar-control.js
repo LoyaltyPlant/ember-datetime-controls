@@ -2,7 +2,7 @@ import Ember from "ember";
 import moment from "moment";
 import {getLocaleWeekDays, getLocaleFirstDayOfWeek} from "ember-datetime-controls/utils/locale";
 import layout from "ember-datetime-controls/templates/components/private/calendar-control";
-import BaseControl from './control';
+import BaseControl from "./control";
 
 const {
   get,
@@ -73,7 +73,6 @@ export default BaseControl.extend({
   }),
 
   weeks: Ember.computed('_month', '_year', 'minDate', 'maxDate', function () {
-    console.time('getting weeks');
     const weeks = [],
       month = this.get('_month'),
       year = this.get('_year'),
@@ -168,7 +167,6 @@ export default BaseControl.extend({
       });
     });
 
-    console.timeEnd('getting weeks');
     return weeks;
   }),
 

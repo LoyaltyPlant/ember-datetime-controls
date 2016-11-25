@@ -1,13 +1,50 @@
-<h2>Перечисления</h2>
-{{#each model.datesList as |date|}}
-  {{date-picker
-    date=date
-    maxTime='22:40'
-    format="LL"
-    timeZone="Europe/Moscow"
-    timeEnabled=true
-    dateEnabled=false}}
-  <span {{action "delete" date}}>x</span>
-{{/each}}
+<div class="row">
 
+    <div class="col-xs-12">
+        <h2>DateTimePickers</h2>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="box">
+            <p>Locale: en-US - America/NewYork</p>
+            <p>Choosed date <strong>{{moment-format model.newYorkDate 'LLL'}}</strong></p>
+
+            {{datetime-picker
+              date=model.newYorkDate
+              timeZone="America/New_York"
+              locale="en-US"
+              onchange=(action (mut model.newYorkDate))
+            }}
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="box">
+            <p>Locale: de - Europe/Berlin</p>
+            <p>Choosed date <strong>{{moment-format model.berlinDate 'LLL'}}</strong></p>
+
+            {{datetime-picker
+              date=model.berlinDate
+              timeZone="America/New_York"
+              locale="de"
+              onchange=(action (mut model.berlinDate))
+            }}
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="box">
+            <p>Locale: ru - Europe/Moscow</p>
+            <p>Choosed date <strong>{{moment-format model.moscowDate 'LLL'}}</strong></p>
+
+            {{datetime-picker
+                date=model.moscowDate
+                locale="ru"
+                timeZone="Europe/Moscow"
+                onchange=(action (mut model.moscowDate))
+            }}
+        </div>
+    </div>
+
+</div>
 
