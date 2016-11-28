@@ -12,8 +12,8 @@ const {
 
 export default Ember.Component.extend({
   layout,
-  classNames: ['dt-control__input-group'],
-  date: null,
+  classNames: ['dt-controls'],
+  date: Date.now(),
   dateEnabled: true,
   disabledDates: null,
   documentClickHandler: null,
@@ -29,7 +29,6 @@ export default Ember.Component.extend({
   minTime: null,
   timeEnabled: true,
   timeZone: EmberDateTimeControlsConfig.timeZone,
-
 
   currentHours: computed('date', {
     get() {

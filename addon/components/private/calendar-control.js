@@ -27,7 +27,7 @@ export default BaseControl.extend({
   _year: null,
   _selectedDate: null,
 
-  classNames: ['dt-control__container'],
+  classNames: ['dt-calendar'],
 
   init() {
     this._super(...arguments);
@@ -166,6 +166,13 @@ export default BaseControl.extend({
         }
       });
     });
+
+    const lastWeek = weeks[weeks.length-1].get('dates');
+    const lastWeekLength = lastWeek.length;
+
+    for(let i = 0; i < 7 - lastWeekLength; i++) {
+      lastWeek.push({index: null});
+    }
 
     return weeks;
   }),

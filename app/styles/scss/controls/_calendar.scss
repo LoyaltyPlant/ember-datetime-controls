@@ -1,4 +1,3 @@
-
 .dt-control__container {
   @extend .cf;
   position: absolute;
@@ -15,11 +14,6 @@
   .controls-up & {
     background: red;
   }
-}
-
-.dt-control__calendar {
-  width: 210px;
-  margin: auto;
 }
 
 .dt-control {
