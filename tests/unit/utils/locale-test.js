@@ -5,7 +5,8 @@ module('Unit | Utility | locale');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  let result = locale.getLocaleFirstDayOfWeek("en");
-  assert.equal(result, 1, 'Monday is first day of week in ru locale');
-  assert.equal(result, 0, 'Sunday is first day of week in en locale');
+  const ruLocaleFirstDOW = locale.getLocaleFirstDayOfWeek("ru");
+  const enLocaleFirstDOW = locale.getLocaleFirstDayOfWeek("en-US");
+  assert.equal(ruLocaleFirstDOW, 1, 'Monday is first day of week in ru locale');
+  assert.equal(enLocaleFirstDOW, 0, 'Sunday is first day of week in en locale');
 });
