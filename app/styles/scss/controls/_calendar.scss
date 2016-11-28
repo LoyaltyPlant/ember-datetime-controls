@@ -22,6 +22,11 @@
   margin: auto;
 }
 
+.dt-control__week,
+.dt-control__calendar-weekdays {
+  display: flex;
+}
+
 .dt-control {
   &__next-month {
     float: right;
@@ -48,12 +53,12 @@
 
 .dt-control__date,
 .dt-control__weekday {
-  display: inline-block;
   text-align: center;
 }
 
 .dt-control__weekday {
   width: 26px;
+  height: 24px;
 }
 
 .dt-control__weekend {
@@ -61,10 +66,11 @@
 }
 
 .dt-control__date {
-  width: 24px;
   height: 24px;
-  line-height: 24px;
+  width: 24px;
+
   font-size: 12px;
+  line-height: 24px;
   cursor: pointer;
   border: 1px solid transparent;
   &:not(.disabled):hover {
