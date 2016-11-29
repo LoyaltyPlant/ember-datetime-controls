@@ -2,22 +2,27 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: calc(100% + 6px);
-  z-index: 10;
   left: 0;
-  width: 300px;
-  padding: 25px;
+  top: 100%;
+  z-index: 10;
+  width: 250px;
+  padding: 20px;
   background-color: #fff;
   box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.2);
   border: 1px solid #D7D9D9;
   border-radius: 2px;
   cursor: default;
 
+  &.controls-up {
+    top: -253px;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    color: #08BED5;
+    color: #232829;
+    margin-bottom: 12px;
   }
 
   &__prev-month, &__next-month {
@@ -29,10 +34,11 @@
   &__weekdays {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 6px;
   }
 
   &__weekday {
-    text-transform: uppercase;
+    text-transform: lowercase;
     font-size: 12px;
     line-height: 18px;
     width: 100%;
@@ -49,9 +55,41 @@
   }
 
   &__date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30px;
     font-size: 12px;
     line-height: 18px;
-    width: 100%;
     text-align: center;
+    cursor: pointer;
+
+    &:hover, &--selected {
+      background-color: #D7D9D9;
+    }
+
+    &--weekday {
+      color: #E53935;
+    }
+
+    &--current {
+      background-color: #D7D9D9;
+    }
+
+    &--disabled {
+      color: #72747A;
+      cursor: not-allowed;
+      &:hover {
+        background: none;
+      }
+    }
+
+    &--empty {
+      cursor: default;
+      &:hover {
+        background: none;
+      }
+    }
   }
 }

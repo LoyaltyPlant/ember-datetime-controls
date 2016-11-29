@@ -1,0 +1,43 @@
+.dt-time-list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: -19px;
+  top: calc(100% + 8px);
+  z-index: 10;
+  width: 70px;
+  height: 254px;
+  overflow-x: hidden;
+  background-color: #fff;
+  box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #D7D9D9;
+  border-radius: 2px;
+  cursor: default;
+  text-align: center;
+
+  &.controls-up {
+    top: -263px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    background: white;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #D7D9D9;
+  }
+}
+
+.dt-time-picker {
+  padding: 6px 0;
+  cursor: pointer;
+  &:hover {
+    background-color: #08BED5;
+    color: #fff;
+  }
+
+  &--disabled {
+    color: #D7D9D9;
+  }
+}

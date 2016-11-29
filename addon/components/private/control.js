@@ -5,17 +5,19 @@ const {
 } = Ember;
 
 export default Ember.Component.extend({
-  classNameBindings: ['isControlsUp:controls-up'],
-  didInsertElement() {
+  didRender() {
     this._super(...arguments);
-    const viewportHeight = window.screen.availHeight;
-    const [element] = this.$();
-    const { top } = element.getBoundingClientRect();
-    const spacingToBottom = viewportHeight - top;
-    const elementHeight = element.offsetHeight;
+    const windowHeight = window.innerHeight;
+    const element = this.$();
+    const {top, height} = element[0].getBoundingClientRect();
+    const spacingToBottom = windowHeight - top;
 
-    if ( spacingToBottom < elementHeight ) {
-      set(this, 'isControlsUp', true);
+    if ( spacingToBottom < height ) {
+      if(element.hasClass('dt-calendar')) {
+        element.css({top: -height - 1});
+      } else if(element.hasClass('dt-time-list')) {
+        element.css({top: -height - 9});
+      }
     }
   }
 });

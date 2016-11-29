@@ -15,19 +15,18 @@ const WEEK = Ember.Object.extend({
 
 export default BaseControl.extend({
   layout,
+  classNames: ['dt-calendar'],
+  
   locale: null,
   date: null,
   minDate: null,
   maxDate: null,
   disabledDates: null,
-
+  
   _weekDays: null,
-
   _month: null,
   _year: null,
   _selectedDate: null,
-
-  classNames: ['dt-calendar'],
 
   init() {
     this._super(...arguments);

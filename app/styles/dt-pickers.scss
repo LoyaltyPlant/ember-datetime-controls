@@ -23,18 +23,19 @@
 
     &--time {
       display: flex;
+      padding: 8px 18px;
     }
   }
 
   &__time {
-    margin-left: 8px;
+    position: relative;
+    margin-left: 20px;
 
     &:first-child {
       margin-left: 0;
     }
 
     &--hour, &--minutes {
-      position: relative;
       padding-right: 14px;
       cursor: pointer;
 

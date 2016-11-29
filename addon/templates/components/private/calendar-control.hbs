@@ -16,6 +16,7 @@
       <div class="dt-calendar__week">
         {{#each week.dates as |date|}}
             <div class="dt-calendar__date
+                {{if (not date.index) 'dt-calendar__date--empty'}}
                 {{if date.weekend 'dt-calendar__date--weekday'}}
                 {{if date.disabled 'dt-calendar__date--disabled'}}
                 {{if (eq _selectedDate date) 'dt-calendar__date--selected'}}

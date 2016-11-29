@@ -17,17 +17,15 @@ export default Ember.Component.extend({
   dateEnabled: true,
   disabledDates: null,
   documentClickHandler: null,
-
-  format: EmberDateTimeControlsConfig.format,
   isAmPm: null,
-  isControlsUp: false,
   isShowCalendar: false,
-  locale: EmberDateTimeControlsConfig.locale,
   maxDate: null,
   maxTime: null,
   minDate: null,
   minTime: null,
   timeEnabled: true,
+  format: EmberDateTimeControlsConfig.format,
+  locale: EmberDateTimeControlsConfig.locale,
   timeZone: EmberDateTimeControlsConfig.timeZone,
 
   currentHours: computed('date', {
@@ -85,7 +83,6 @@ export default Ember.Component.extend({
   },
 
   actions: {
-
     hideAllPickers() {
       this.send('hideHourPicker');
       this.send('hideMinutePicker');
