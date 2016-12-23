@@ -1,6 +1,6 @@
 <div class="dt-pickers">
   {{#if dateEnabled}}
-    <div class="dt-pickers__picker dt-pickers__picker--date" {{action 'showCalendar' bubbles=false}}>
+    <div class="dt-pickers__picker dt-pickers__picker--date" {{action 'showCalendar' bubbles=false}} tabindex="0">
       {{formattedDate}}
 
       {{#if isShowCalendar}}
@@ -18,7 +18,7 @@
     </div>
   {{/if}}
   {{#if timeEnabled}}
-    <div class="dt-pickers__picker dt-pickers__picker--time">
+    <div class="dt-pickers__picker dt-pickers__picker--time" tabindex="0">
       <div class="dt-pickers__time dt-pickers__time--hour" {{action 'showHourPicker' bubbles=false}}>
           {{currentHours}}
           {{#if isShowHourPicker}}

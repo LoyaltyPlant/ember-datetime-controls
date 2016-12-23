@@ -10,6 +10,11 @@
     background-color: #fff;
     border-radius: 2px;
     margin-left: 6px;
+    outline: none;
+
+    &:focus {
+      border: 1px solid #08BED5;
+    }
 
     &:first-child {
       margin-left: 0;
