@@ -10,7 +10,9 @@
     background-color: #fff;
     border-radius: 2px;
     margin-left: 6px;
+    min-height: 42px;
     outline: none;
+    user-select: none;
 
     &:focus {
       border: 1px solid #08BED5;

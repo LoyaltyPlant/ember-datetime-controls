@@ -2,7 +2,6 @@
   {{#if dateEnabled}}
     <div class="dt-pickers__picker dt-pickers__picker--date" {{action 'showCalendar' bubbles=false}} tabindex="0">
       {{formattedDate}}
-
       {{#if isShowCalendar}}
         {{private/calendar-control
             date=date

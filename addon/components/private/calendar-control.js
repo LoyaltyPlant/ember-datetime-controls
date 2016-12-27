@@ -16,13 +16,13 @@ const WEEK = Ember.Object.extend({
 export default BaseControl.extend({
   layout,
   classNames: ['dt-calendar'],
-  
+
   locale: null,
   date: null,
   minDate: null,
   maxDate: null,
   disabledDates: null,
-  
+
   _weekDays: null,
   _month: null,
   _year: null,
@@ -182,7 +182,7 @@ export default BaseControl.extend({
         return;
       }
       let newDate = {year: this.get('_year'), month: this.get('_month'), date: date.index};
-      Ember.set(this, '_selectedDate', date);
+      set(this, '_selectedDate', date);
       this.attrs.onDateUpdated(newDate);
     },
 

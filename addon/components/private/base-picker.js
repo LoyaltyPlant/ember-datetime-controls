@@ -7,13 +7,15 @@ import {isAmPm} from "ember-datetime-controls/utils/locale";
 const {
   get,
   set,
-  computed
+  computed,
+  computed: { notEmpty }
 } = Ember;
 
 export default Ember.Component.extend({
   layout,
   classNames: ['dt-controls'],
-  date: Date.now(),
+
+  date: null,
   dateEnabled: true,
   disabledDates: null,
   documentClickHandler: null,
@@ -41,11 +43,16 @@ export default Ember.Component.extend({
     }
   }),
 
+  isDateTimeSelected: notEmpty('date'),
+
   formattedDate: computed('date', function () {
-    return moment(get(this, 'date'))
-      .tz(this.get('timeZone'))
-      .locale(this.get('locale'))
-      .format(this.get('format'));
+    const date = get(this, 'date');
+    if (date && date instanceof Date) {
+      return moment(date)
+        .tz(this.get('timeZone'))
+        .locale(this.get('locale'))
+        .format(this.get('format'));
+    }
   }),
 
   meridiem: computed('date', {
@@ -73,13 +80,21 @@ export default Ember.Component.extend({
     document.addEventListener('click', get(this, 'documentClickHandler'));
   },
 
-  onchange(date) {
-    set(this, 'date', date);
+  didReceiveAttrs() {
+    const date = get(this, 'date');
+    this._super(...arguments);
+    if (date && date instanceof Date) {
+      set(this, 'date', date);
+    }
   },
 
   willDestroyElement() {
     this._super(...arguments);
     document.removeEventListener('click', get(this, 'documentClickHandler'));
+  },
+
+  onchange(date) {
+    set(this, 'date', date);
   },
 
   actions: {
@@ -125,7 +140,7 @@ export default Ember.Component.extend({
       if (!get(this, 'timeEnabled')) {
         newDate = newDate.startOf('date');
       }
-      if (this.onchange) {
+      if (this.onchange && this.onchange instanceof Function) {
         this.onchange(newDate.toDate());
       } else {
         Ember.Logger.warn('Not implemented "onchange" callback');

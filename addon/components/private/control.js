@@ -4,6 +4,8 @@ const {
   set,
 } = Ember;
 
+//TODO: mixin
+
 export default Ember.Component.extend({
   didRender() {
     this._super(...arguments);

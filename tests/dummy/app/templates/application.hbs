@@ -11,11 +11,12 @@
                 locale="en-US"
                 timeZone="America/New_York"
                 onchange=(action (mut model.newYourkDate))
+                disabledDates=disabledDates
             }}
         </div>
     </div>
 
-    <div class="col-sm-4">
+    {{!-- <div class="col-sm-4">
         <div class="box">
             {{all-pickers-block
                 date=model.berlinDate
@@ -35,7 +36,24 @@
                 onchange=(action (mut model.moscowDate))
             }}
         </div>
+    </div> --}}
+
+    <div class="col-sm-4">
+        <div class="box">
+            {{all-pickers-block
+                date=newDate
+                locale="en-US"
+                timeZone="America/New_York"
+                onchange=(action (mut newDate))
+                disabledDates=disabledDates
+            }}
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="box">
+        {{time-picker}}
+      </div>
     </div>
 
 </div>
-

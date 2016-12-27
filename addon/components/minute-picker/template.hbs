@@ -1,0 +1,6 @@
+{{#each minutes as |minute|}}
+    <div class="dt-time-picker {{if minute.disabled 'dt-time-picker--disabled'}}"
+      {{action 'select' minute bubbles=false}}>
+      {{minute}}
+    </div>
+{{/each}}

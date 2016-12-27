@@ -11,46 +11,52 @@ const {
 
 export default BaseControl.extend({
   classNames: ['dt-time-list'],
-  
+
   _minTime: computed('minDate', function () {
     const minTime = get(this, 'minTime');
     const minDate = get(this, 'minDate');
     const minDatetime = (minDate) ? this._getDatetime(get(this, 'minDate'), 'HH:mm') : minTime;
-    
+
     return (minTime > minDatetime) ? minTime : minDatetime;
   }),
-  
+
   _maxTime: computed('maxDate', function () {
     const maxTime = get(this, 'maxTime');
     const maxDate = get(this, 'maxDate');
     const maxDatetime = (maxDate) ? this._getDatetime(get(this, 'maxDate'), 'HH:mm') : maxTime;
-    
+
     return (maxTime > maxDatetime) ? maxTime : maxDatetime;
   }),
-  
+
   _minHourTime: computed('_minTime', function () {
     const minTime = get(this, '_minTime');
-    
+
     return (minTime) ? +minTime.split(':')[0] : null;
   }),
-  
+
   _minMinuteTime: computed('_minTime', function () {
     const minTime = get(this, '_minTime');
-    
+
     return (minTime) ? +minTime.split(':')[1] : null;
   }),
-  
+
   _maxHourTime: computed('_maxTime', function () {
     const maxTime = get(this, '_maxTime');
-    
+
     return (maxTime) ? +maxTime.split(':')[0] : MAX_HOURS + 1;
   }),
-  
+
   _maxMinuteTime: computed('_maxTime', function () {
     const maxTime = get(this, '_maxTime');
-    
+
     return (maxTime) ? +maxTime.split(':')[1] : MAX_MINUTES + 1;
   }),
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    const time = (get(this, 'datetime') instanceof Date) ? moment(get(this, 'datetime')).format('HH:mm') : get(this, 'time');
+  },
 
   _formatTime(time) {
     return `0${time}`.slice(-2);
@@ -93,16 +99,12 @@ export default BaseControl.extend({
     }
     return true;
   },
-  
+
   _isDisabledMinute(timeString) {
     return ( timeString > get(this, '_maxTime') || timeString < get(this, '_minTime'));
   },
-  
+
   _isDisabledHour(hour) {
     return (hour > get(this, '_maxHourTime') || hour < get(this, '_minHourTime'));
-  },
-  
-  init() {
-    this._super(...arguments);
   }
 });
