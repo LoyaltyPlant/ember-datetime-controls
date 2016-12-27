@@ -1,0 +1,15 @@
+<div class="dt-pickers">
+    <div class="dt-pickers__picker dt-pickers__picker--date" {{action 'toggle' bubbles=false}} tabindex="0">
+      {{formattedDate}}
+      {{#if show}}
+        {{private/calendar-control
+            date=date
+            minDate=minDate
+            maxDate=maxDate
+            disabledDates=disabledDates
+            timeZone=timeZone
+            locale=locale
+        }}
+      {{/if}}
+    </div>
+</div>

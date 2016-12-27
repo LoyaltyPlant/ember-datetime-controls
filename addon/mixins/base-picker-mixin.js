@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 const {
-  get
+  get,
+  set
 } = Ember;
 
 export default Ember.Mixin.create({
@@ -10,12 +11,13 @@ export default Ember.Mixin.create({
   init() {
     this._super(...arguments);
 
-    document.addEventListener('click', this.dispatchHideAllPickersEvent.bind(this));
+    set(this, 'dispatchHideAllPickersEvent', this.dispatchHideAllPickersEvent.bind(this))
+    document.addEventListener('click', this.dispatchHideAllPickersEvent);
   },
   willDestroyElement() {
     this._super(...arguments);
 
-    document.removeEventListener('click', this.dispatchHideAllPickersEvent.bind(this));
+    document.removeEventListener('click', this.dispatchHideAllPickersEvent);
   },
   dispatchHideAllPickersEvent() {
     const event = get(this, 'event');

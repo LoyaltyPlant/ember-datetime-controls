@@ -38,7 +38,7 @@
         </div>
     </div> --}}
 
-    <div class="col-sm-4">
+    {{!-- <div class="col-sm-4">
         <div class="box">
             {{all-pickers-block
                 date=newDate
@@ -48,11 +48,19 @@
                 disabledDates=disabledDates
             }}
         </div>
-    </div>
+    </div> --}}
 
-    <div class="col-sm-12">
+    <div class="col-sm-12" style="margin-bottom: 30px">
       <div class="box">
         {{time-picker}}
+      </div>
+    </div>
+
+    <div class="col-sm-12" >
+      <div class="box">
+        {{date-picker
+            date=model.berlinDate
+        }}
       </div>
     </div>
 
