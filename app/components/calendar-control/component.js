@@ -1,0 +1,1 @@
+export { default } from 'ember-datetime-controls/components/calendar-control/component';

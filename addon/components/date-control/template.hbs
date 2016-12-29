@@ -1,0 +1,17 @@
+<div class="dt-pickers__formatted-date">{{formattedDate}}</div>
+{{#if isDateSelected}}
+  <i class="icon-delete" {{action "cleanDate" bubbles=false}}></i>
+{{else}}
+  <i class="icon-calendar"></i>
+{{/if}}
+{{#if show}}
+  {{calendar-control
+      date=date
+      minDate=minDate
+      maxDate=maxDate
+      disabledDates=disabledDates
+      timeZone=timeZone
+      locale=locale
+      onDateUpdated=(action "onDateUpdated")
+  }}
+{{/if}}

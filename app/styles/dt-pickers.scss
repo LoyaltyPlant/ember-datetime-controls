@@ -26,6 +26,9 @@
       position: relative;
       cursor: pointer;
       flex-basis: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     &--time {
@@ -61,5 +64,9 @@
       text-transform: uppercase;
       color: #72747A;
     }
+  }
+
+  &__formatted-date {
+    flex-basis: 100%;
   }
 }

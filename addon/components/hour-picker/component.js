@@ -18,7 +18,7 @@ export default Component.extend({
   hours: computed({
     get() {
       const hours = [];
-      for (let i = 1; i <= MAX_HOURS; i++) {
+      for (let i = 1; i <= MAX_HOURS-1; i++) {
         hours.push(`0${i}`.slice(-2));
       }
       return hours;

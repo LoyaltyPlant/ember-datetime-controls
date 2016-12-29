@@ -15,9 +15,9 @@ export default Ember.Component.extend({
     const spacingToBottom = windowHeight - top;
 
     if ( spacingToBottom < height ) {
-      if(element.hasClass('dt-calendar')) {
+      if (element.hasClass('dt-calendar')) {
         element.css({top: -height - 1});
-      } else if(element.hasClass('dt-time-list')) {
+      } else if (element.hasClass('dt-time-list')) {
         element.css({top: -height - 9});
       }
     }

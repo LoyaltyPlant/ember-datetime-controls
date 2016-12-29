@@ -7,7 +7,6 @@ const {
 
 export default Ember.Mixin.create({
   event: new Event('hide-all-pickers'),
-
   init() {
     this._super(...arguments);
 

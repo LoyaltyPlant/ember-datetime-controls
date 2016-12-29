@@ -1,25 +1,5 @@
-<div class="dt-pickers__picker dt-pickers__picker--time" tabindex="0">
-  <div class="dt-pickers__time dt-pickers__time--hour" {{action 'toggleHours' bubbles=false}}>
-      {{currentHour}}
-      {{#if showHours}}
-        {{hour-picker
-          time=time
-          onchange=(action "onchange")
-        }}
-      {{/if}}
-  </div>
-  <div class="dt-pickers__time dt-pickers__time--minutes" {{action 'toggleMinutes' bubbles=false}}>
-      {{currentMinute}}
-      {{#if showMinutes}}
-        {{minute-picker
-          time=time
-          onchange=(action "onchange")
-        }}
-      {{/if}}
-  </div>
-  {{#if isAmPm}}
-    <div class="dt-pickers__time dt-pickers__time--meridiem">
-      {{meridiem}}
-    </div>
-  {{/if}}
-</div>
+{{time-control
+    time=time
+    locale=locale
+    onchange=onchange
+}}

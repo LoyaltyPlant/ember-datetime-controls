@@ -50,18 +50,38 @@
         </div>
     </div> --}}
 
-    <div class="col-sm-12" style="margin-bottom: 30px">
-      <div class="box">
-        {{time-picker}}
-      </div>
-    </div>
+</div>
 
-    <div class="col-sm-12" >
-      <div class="box">
-        {{date-picker
-            date=model.berlinDate
-        }}
-      </div>
+<div class="row">
+  <div class="col-sm-12" style="margin-bottom: 30px">
+    <div class="box">
+      {{time-picker time="23:30" locale="en-US"}}
     </div>
+  </div>
 
+
+  <div class="col-sm-6" >
+    <div class="box">
+      {{date-picker
+        date=newDate
+        locale="en-US"
+        timeZone="America/Chicago"
+      }}
+      <div>{{newDate}}</div>
+    </div>
+  </div>
+
+</div>
+<div class="row">
+
+  <div class="col-sm-4">
+    <div class="box">
+      {{datetime-picker
+          date=newDate
+          locale="en-US"
+          timeZone="America/New_York"
+          locale='en-US'
+      }}
+    </div>
+  </div>
 </div>

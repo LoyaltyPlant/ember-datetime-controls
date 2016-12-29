@@ -1,12 +1,12 @@
-import Ember from "ember";
+import Ember from 'ember';
+import layout from './template';
 import moment from "moment";
 import {getLocaleWeekDays, getLocaleFirstDayOfWeek} from "ember-datetime-controls/utils/locale";
-import layout from "ember-datetime-controls/templates/components/private/calendar-control";
-import BaseControl from "./control";
 
 const {
   get,
-  set
+  set,
+  computed
 } = Ember;
 
 const WEEK = Ember.Object.extend({
@@ -57,14 +57,14 @@ export default Ember.Component.extend({
 
   didReceiveAttrs() {
     const initialDate = moment(get(this, 'date') || Date.now())
-                          .tz(get(this, 'timeZone'));
+      .tz(get(this, 'timeZone'));
 
     set(this, '_month', initialDate.month());
     set(this, '_year', initialDate.year());
     set(this, 'initialDate', initialDate);
   },
 
-  monthLabel: Ember.computed('_month', function () {
+  monthLabel: computed('_month', function () {
     const locale = get(this, 'locale');
 
     if ( locale !== 'ru' ) {
@@ -74,20 +74,20 @@ export default Ember.Component.extend({
     }
   }),
 
-  weeks: Ember.computed('_month', '_year', 'minDate', 'maxDate', function () {
+  weeks: computed('_month', '_year', 'minDate', 'maxDate', function () {
     const weeks = [],
-      month = this.get('_month'),
-      year = this.get('_year'),
-      timeZone = this.get('timeZone'),
-      firstDayOfWeek = this.get('_localeFirstDayOfWeek'),
+      month = get(this, '_month'),
+      year = get(this, '_year'),
+      timeZone = get(this, 'timeZone'),
+      firstDayOfWeek = get(this, '_localeFirstDayOfWeek'),
       monthFirstDate = moment.tz([year, month, 1], timeZone),
       daysInMonth = monthFirstDate.daysInMonth(),
       monthLastDate = moment.tz([year, month, daysInMonth], timeZone),
       monthFirstWeekDay = monthFirstDate.day() === 0 && firstDayOfWeek === 1 ? 7 : monthFirstDate.day(),
       currentTimeZoneDate = get(this, 'initialDate'),
-      disabledDates = get(this, 'disabledDates') ? get(this, 'disabledDates') : [],
-      minDate = get(this, 'minDate') ? moment.tz(get(this, 'minDate'), timeZone) : null,
-      maxDate = get(this, 'maxDate') ? moment.tz(get(this, 'maxDate'), timeZone) : null;
+      disabledDates = get(this, 'disabledDates') ? this.get('disabledDates') : [],
+      minDate = this.get('minDate') ? moment.tz(this.get('minDate'), timeZone) : null,
+      maxDate = this.get('maxDate') ? moment.tz(this.get('maxDate'), timeZone) : null;
 
     let firstWeek = WEEK.create({dates: []}),
       disabledMonthDates = Ember.A(),
