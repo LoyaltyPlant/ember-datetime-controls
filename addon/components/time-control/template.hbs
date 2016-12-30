@@ -2,8 +2,8 @@
   {{currentHour}}
   {{#if (and (not disabled) showHours)}}
     {{hour-picker
-      time=time
-      onchange=(action "onchange")
+        time=time
+        onchange=(action "onchange")
     }}
   {{/if}}
 </div>
@@ -11,8 +11,8 @@
   {{currentMinute}}
   {{#if (and (not disabled) showMinutes)}}
     {{minute-picker
-      time=time
-      onchange=(action "onchange")
+        time=time
+        onchange=(action "onchange")
     }}
   {{/if}}
 </div>

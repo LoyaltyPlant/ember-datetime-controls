@@ -2,7 +2,7 @@ import Ember from "ember";
 import moment from "moment";
 import layout from "./template";
 import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
-import EmberDateTimeControlsConfig from "ember-datetime-controls/config";
+import PickerStateBusMixin from "ember-datetime-controls/mixins/picker-state-bus-mixin";
 
 
 const {
@@ -13,13 +13,9 @@ const {
   set
 } = Ember;
 
-export default Component.extend(BasePickerMixin, {
+export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   layout,
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--date'],
-
-  format: EmberDateTimeControlsConfig.format,
-  locale: EmberDateTimeControlsConfig.locale,
-  timeZone: EmberDateTimeControlsConfig.timeZone,
 
   formattedDate: computed('date', function () {
     const date = get(this, 'date');
@@ -33,20 +29,7 @@ export default Component.extend(BasePickerMixin, {
 
   isDateSelected: bool('date'),
 
-  didInsertElement() {
-    this._super(...arguments);
-
-    set(this, 'hideCalendar', this.hideCalendar.bind(this));
-    this.$().on('hide-all-pickers', this.hideCalendar);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-
-    this.$().on('hide-all-pickers', this.hideCalendar);
-  },
-
-  hideCalendar() {
+  hide() {
     set(this, 'show', false);
   },
 
@@ -57,6 +40,7 @@ export default Component.extend(BasePickerMixin, {
 
   actions: {
     toggle() {
+      this.dispatchHideAllPickersEvent();
       this.toggleProperty('show');
     },
     onDateUpdated(dateObj) {

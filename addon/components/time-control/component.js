@@ -1,9 +1,9 @@
 import Ember from "ember";
 import layout from "./template";
-import EmberDateTimeControlsConfig from "ember-datetime-controls/config";
 import {isAmPm} from "ember-datetime-controls/utils/locale";
 import {MAX_HOURS} from "ember-datetime-controls/utils/constants";
 import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
+import PickerStateBusMixin from "ember-datetime-controls/mixins/picker-state-bus-mixin";
 
 const {
   Component,
@@ -12,13 +12,12 @@ const {
   set
 } = Ember;
 
-export default Component.extend(BasePickerMixin, {
+export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   layout,
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--time'],
 
   disabled: false,
   time: 'HH:mm',
-  locale: EmberDateTimeControlsConfig.locale,
 
   currentHour: computed('time', {
     get() {
@@ -59,24 +58,12 @@ export default Component.extend(BasePickerMixin, {
 
   didReceiveAttrs() {
     const time = get(this, 'time') || 'HH:mm';
+    this._super(...arguments);
     set(this, 'time', time);
-    this.hideAllPickers();
+    this.hide();
   },
 
-  didInsertElement() {
-    this._super(...arguments);
-    set(this, 'hideAllPickers', this.hideAllPickers.bind(this));
-
-    this.$().on('hide-all-pickers', this.hideAllPickers);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-
-    this.$().off('hide-all-pickers', this.hideAllPickers);
-  },
-
-  hideAllPickers() {
+  hide() {
     set(this, 'showHours', false);
     set(this, 'showMinutes', false);
   },
@@ -89,7 +76,7 @@ export default Component.extend(BasePickerMixin, {
       if (onchange && onchange instanceof Function) {
         onchange(time);
       }
-      this.hideAllPickers();
+      this.hide();
     },
     toggleHours() {
       this.dispatchHideAllPickersEvent();

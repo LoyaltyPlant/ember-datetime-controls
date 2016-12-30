@@ -1,13 +1,15 @@
 import Ember from "ember";
 import layout from "./template";
 import moment from "moment";
+import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
 
 const {
+  Component,
   get,
   set
 } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend(BasePickerMixin, {
   layout,
   classNames: ['dt-pickers'],
 
