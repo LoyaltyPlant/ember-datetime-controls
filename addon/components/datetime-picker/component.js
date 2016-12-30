@@ -1,6 +1,6 @@
-import Ember from 'ember';
-import layout from './template';
-import moment from 'moment';
+import Ember from "ember";
+import layout from "./template";
+import moment from "moment";
 
 const {
   get,
@@ -17,6 +17,9 @@ export default Ember.Component.extend({
 
     if (date && date instanceof Date) {
       set(this, 'time', this.getTimeZoneDate(date).format('HH:mm'));
+      set(this, 'isTimePickerDisabled', false);
+    } else {
+      set(this, 'isTimePickerDisabled', true);
     }
   },
 
@@ -27,24 +30,25 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    onTimeChange(time) {
+    onTimeChange(time = '00:00') {
       const onchange = get(this, 'onchange');
       const date = get(this, 'date');
+      const [hour, minute] = time.split(':');
+      const newDateTime = this.getTimeZoneDate(date)
+                                  .set({hour, minute, second: 0})
+                                  .toDate();
 
       if (date && date instanceof Date) {
-        const [hour, minute] = time.split(':');
-        const newDateTime = this.getTimeZoneDate(date)
-                              .set({hour,minute, second: 0})
-                              .toDate();
-
         set(this, 'date', newDateTime);
+      } else {
+        return;
       }
 
       if (onchange && onchange instanceof Function) {
-        onchange(time);
+        onchange(newDateTime);
       }
     },
-    onDateChange() {
+    onDateUpdated() {
       this.send('onTimeChange', get(this, 'time'));
     }
   }

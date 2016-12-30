@@ -59,6 +59,10 @@
         color: #72747a;
       }
     }
+    &--disabled {
+      cursor: not-allowed;
+      color: #72747A;
+    }
 
     &--meridiem {
       text-transform: uppercase;

@@ -1,7 +1,7 @@
-import Ember from 'ember';
-import moment from 'moment';
-import layout from './template';
-import BasePickerMixin from 'ember-datetime-controls/mixins/base-picker-mixin';
+import Ember from "ember";
+import moment from "moment";
+import layout from "./template";
+import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
 import EmberDateTimeControlsConfig from "ember-datetime-controls/config";
 
 
@@ -62,6 +62,7 @@ export default Component.extend(BasePickerMixin, {
     onDateUpdated(dateObj) {
       const timeZone = get(this, 'timeZone');
       const locale = get(this, 'locale');
+      const onDateUpdated = get(this, 'onDateUpdated');
       const newDate = moment()
         .tz(timeZone)
         .locale(locale)
@@ -69,9 +70,9 @@ export default Component.extend(BasePickerMixin, {
         .toDate();
 
       set(this, 'date', newDate);
-      // if (  ) {
-      //
-      // }
+      if (onDateUpdated && onDateUpdated instanceof Function) {
+        onDateUpdated(get(this, 'date'));
+      }
 
         this.send('toggle');
     },

@@ -5,9 +5,11 @@
     disabledDates=disabledDates
     timeZone=timeZone
     locale=locale
+    onDateUpdated=(action "onDateUpdated")
 }}
 {{time-control
     time=time
     locale=locale
     onchange=(action "onTimeChange")
+    disabled=isTimePickerDisabled
 }}

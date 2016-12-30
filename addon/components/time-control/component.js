@@ -1,10 +1,9 @@
-import Ember from 'ember';
-import layout from './template';
-import BasePicker from "../private/base-picker";
+import Ember from "ember";
+import layout from "./template";
 import EmberDateTimeControlsConfig from "ember-datetime-controls/config";
-import {isAmPm} from 'ember-datetime-controls/utils/locale';
-import {MAX_HOURS} from 'ember-datetime-controls/utils/constants';
-import BasePickerMixin from 'ember-datetime-controls/mixins/base-picker-mixin';
+import {isAmPm} from "ember-datetime-controls/utils/locale";
+import {MAX_HOURS} from "ember-datetime-controls/utils/constants";
+import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
 
 const {
   Component,
@@ -17,6 +16,7 @@ export default Component.extend(BasePickerMixin, {
   layout,
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--time'],
 
+  disabled: false,
   time: 'HH:mm',
   locale: EmberDateTimeControlsConfig.locale,
 
@@ -24,6 +24,10 @@ export default Component.extend(BasePickerMixin, {
     get() {
       const [hour] = get(this, 'time').split(':');
       const isAmPm = get(this, 'isAmPm');
+
+      if (isNaN(Number(hour))) {
+        return hour;
+      }
 
       if (isAmPm) {
         let _hour = (MAX_HOURS + hour) % 12;
@@ -47,7 +51,7 @@ export default Component.extend(BasePickerMixin, {
   }),
   meridiem: computed('time', {
     get() {
-      const [hour, minute] = get(this, 'time').split(':');
+      const [hour] = get(this, 'time').split(':');
 
       return +hour > 11 ? 'PM' : 'AM';
     }
@@ -56,6 +60,7 @@ export default Component.extend(BasePickerMixin, {
   didReceiveAttrs() {
     const time = get(this, 'time') || 'HH:mm';
     set(this, 'time', time);
+    this.hideAllPickers();
   },
 
   didInsertElement() {
