@@ -1,1 +1,0 @@
-export { default } from 'ember-datetime-controls/components/private/minute-picker';

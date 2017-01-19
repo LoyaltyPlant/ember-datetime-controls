@@ -1,9 +1,13 @@
-import Ember from "ember";
-import PICKER_STATE_BUS from "ember-datetime-controls/utils/picker-state-bus";
+import Ember from 'ember';
+import PICKER_STATE_BUS from 'ember-datetime-controls/utils/picker-state-bus';
 
 /**
- * This mixin provides 'dispatchHideAllPickersEvent' method which triggers 'hide-pickers' event
- * Also it's subscribes to 'hide-pickers' event and call 'hide' method for all components, expect component which trigger the event.
+ * This mixin provides 'dispatchHideAllPickersEvent'
+ * method which triggers 'hide-pickers' event
+ *
+ * Also it subscribes to 'hide-pickers' event
+ * and call 'hide' method for all components,
+ * except component which trigger the event.
  */
 
 export default Ember.Mixin.create({
