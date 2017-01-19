@@ -51,7 +51,7 @@
 
       &:after {
         font-family: "dt";
-        @extend .icon-dropdown:before;
+        @extend .icon-arrow-down:before;
         position: absolute;
         top: 1px;
         right: 0;

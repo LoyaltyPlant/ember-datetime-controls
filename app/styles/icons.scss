@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'dt';
-  src:  url('/ember-datetime-controls/ember-datetime-controls/assets/fonts/dt.eot?3bj1b5');
-  src:  url('/ember-datetime-controls/assets/fonts/dt.eot?3bj1b5#iefix') format('embedded-opentype'),
-  url('/ember-datetime-controls/assets/fonts/dt.woff2?3bj1b5') format('woff2'),
-  url('/ember-datetime-controls/assets/fonts/dt.ttf?3bj1b5') format('truetype'),
-  url('/ember-datetime-controls/assets/fonts/dt.woff?3bj1b5') format('woff'),
-  url('/ember-datetime-controls/assets/fonts/dt.svg?3bj1b5#dt') format('svg');
+  src:  url('fonts/dt.eot?8a32x8');
+  src:  url('fonts/dt.eot?8a32x8#iefix') format('embedded-opentype'),
+  url('fonts/dt.woff2?8a32x8') format('woff2'),
+  url('fonts/dt.ttf?8a32x8') format('truetype'),
+  url('fonts/dt.woff?8a32x8') format('woff'),
+  url('fonts/dt.svg?8a32x8#dt') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,7 +25,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-dropdown:before {
+.icon-arrow-down:before {
   content: "\e90d";
 }
 .icon-calendar:before {
@@ -43,4 +43,9 @@
 .icon-valid:before {
   content: "\e912";
 }
-
+.icon-left:before {
+  content: "\e913";
+}
+.icon-right:before {
+  content: "\e914";
+}
