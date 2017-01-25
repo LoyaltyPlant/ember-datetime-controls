@@ -46,19 +46,20 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
     onDateUpdated(dateObj) {
       const timeZone = get(this, 'timeZone');
       const locale = get(this, 'locale');
-      const onDateUpdated = get(this, 'onDateUpdated');
+      const onChange = get(this, 'onChange');
       const newDate = moment()
         .tz(timeZone)
         .locale(locale)
         .set(dateObj)
         .toDate();
-
-      set(this, 'date', newDate);
-      if (onDateUpdated && onDateUpdated instanceof Function) {
-        onDateUpdated(get(this, 'date'));
+      
+      if (onChange && onChange instanceof Function) {
+        onChange(newDate);
+      } else {
+        set(this, 'date', newDate);
       }
 
-        this.send('toggle');
+      this.send('toggle');
     },
     cleanDate() {
       set(this, 'date', null);

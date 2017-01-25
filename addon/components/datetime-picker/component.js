@@ -33,7 +33,7 @@ export default Component.extend(BasePickerMixin, {
 
   actions: {
     onTimeChange(time = '00:00') {
-      const onchange = get(this, 'onchange');
+      const onChange = get(this, 'onChange');
       const date = get(this, 'date');
       const [hour, minute] = time.split(':');
       const newDateTime = this.getTimeZoneDate(date)
@@ -46,11 +46,11 @@ export default Component.extend(BasePickerMixin, {
         return;
       }
 
-      if (onchange && onchange instanceof Function) {
-        onchange(newDateTime);
+      if (onChange && onChange instanceof Function) {
+        onChange(newDateTime);
       }
     },
-    onDateUpdated() {
+    onDateChange() {
       this.send('onTimeChange', get(this, 'time'));
     }
   }

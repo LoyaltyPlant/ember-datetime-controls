@@ -1,0 +1,26 @@
+.dt-period {
+  display: flex;
+  align-items: center;
+
+  .dt-pickers {
+    flex: 1 1 0;
+
+    &:first-child {
+      order: 1;
+    }
+
+    &:last-child {
+      order: 3;
+    }
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    height: 2px;
+    margin: 0 9px;
+    order: 2;
+    flex: 0 0 12px;
+    background-color: rgb(35, 40, 41);
+  }
+}

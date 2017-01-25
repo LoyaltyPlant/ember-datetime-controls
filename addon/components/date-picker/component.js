@@ -8,5 +8,15 @@ const {
 
 export default Component.extend(BasePickerMixin, {
   layout,
-  classNames: ['dt-pickers']
+  classNames: ['dt-pickers'],
+  
+  //functions
+  onChange: null,
+
+  //passed in
+  date: null,
+  minDate: null,
+  maxDate: null,
+  disabledDates: null,
+  format: 'L'
 });

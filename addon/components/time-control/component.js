@@ -1,7 +1,7 @@
 import Ember from "ember";
 import layout from "./template";
-import {isAmPm} from "ember-datetime-controls/utils/locale";
-import {MAX_HOURS} from "ember-datetime-controls/utils/constants";
+import { isAmPm } from "ember-datetime-controls/utils/locale";
+import { MAX_HOURS } from "ember-datetime-controls/utils/constants";
 import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
 import PickerStateBusMixin from "ember-datetime-controls/mixins/picker-state-bus-mixin";
 
@@ -72,9 +72,10 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
     onchange(time) {
       const onchange = get(this, 'onchange');
 
-      set(this, 'time', time);
       if (onchange && onchange instanceof Function) {
         onchange(time);
+      } else {
+        set(this, 'time', time);
       }
       this.hide();
     },
