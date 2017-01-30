@@ -17,6 +17,11 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   layout,
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--date'],
 
+  //passed in
+  date: null,
+
+  show: false,
+
   formattedDate: computed('date', function () {
     const date = get(this, 'date');
     if (date && date instanceof Date) {
@@ -28,10 +33,6 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   }),
 
   isDateSelected: bool('date'),
-
-  hide() {
-    set(this, 'show', false);
-  },
 
   click(e) {
     e.stopPropagation();
@@ -52,7 +53,7 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
         .locale(locale)
         .set(dateObj)
         .toDate();
-      
+
       if (onChange && onChange instanceof Function) {
         onChange(newDate);
       } else {

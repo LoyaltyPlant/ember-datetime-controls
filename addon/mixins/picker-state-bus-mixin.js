@@ -16,7 +16,9 @@ export default Ember.Mixin.create({
     const self = this;
 
     PICKER_STATE_BUS.on('hide-pickers', function (targetObject) {
-      if ( self !== targetObject && self.hide ) {
+      if ( self !== targetObject &&
+        self.hide &&
+        (!targetObject.get('isDestroyed') || targetObject.get('isDestroying')) ) {
         self.hide();
       }
     });
@@ -24,6 +26,7 @@ export default Ember.Mixin.create({
 
   willDestroyElement() {
     this._super(...arguments);
+    PICKER_STATE_BUS.off('hide-pickers');
   },
 
   dispatchHideAllPickersEvent() {
