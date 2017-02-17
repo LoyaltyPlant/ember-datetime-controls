@@ -3,6 +3,7 @@
   {{#if (and (not disabled) showHours)}}
     {{hour-picker
         time=time
+        locale=locale
         onchange=(action "onchange")
     }}
   {{/if}}

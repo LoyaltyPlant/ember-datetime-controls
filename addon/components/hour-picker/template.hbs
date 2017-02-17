@@ -1,5 +1,5 @@
 {{#each hours as |hour|}}
     <div class="dt-time-picker {{if hour.disabled 'dt-time-picker--disabled'}}" {{action 'select' hour bubbles=false}}>
-      {{hour}}
+      {{format-hour hour locale=locale}}
     </div>
 {{/each}}
