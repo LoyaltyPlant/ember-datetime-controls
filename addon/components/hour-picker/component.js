@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import layout from './template';
 import { MAX_HOURS } from 'ember-datetime-controls/utils/constants';
+import PickerPositioningMixin from 'ember-datetime-controls/mixins/picker-positioning-mixin';
+
 
 
 const {
@@ -9,7 +11,7 @@ const {
   get
 } = Ember;
 
-export default Component.extend({
+export default Component.extend(PickerPositioningMixin, {
   layout,
   classNames: ['dt-time-list'],
 
