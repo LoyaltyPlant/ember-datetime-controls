@@ -1,9 +1,9 @@
-import Ember from "ember";
-import layout from "./template";
-import { isAmPm } from "ember-datetime-controls/utils/locale";
-import { MAX_HOURS } from "ember-datetime-controls/utils/constants";
-import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
-import PickerStateBusMixin from "ember-datetime-controls/mixins/picker-state-bus-mixin";
+import Ember from 'ember';
+import layout from './template';
+import { isAmPm } from 'ember-datetime-controls/utils/locale';
+import { MAX_HOURS } from 'ember-datetime-controls/utils/constants';
+import BasePickerMixin from 'ember-datetime-controls/mixins/base-picker-mixin';
+import PickerStateBusMixin from 'ember-datetime-controls/mixins/picker-state-bus-mixin';
 
 const {
   Component,
@@ -17,7 +17,7 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--time'],
 
   disabled: false,
-  time: 'HH:mm',
+  time: 'hh:mm',
 
   currentHour: computed('time', {
     get() {
@@ -57,7 +57,7 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   }),
 
   didReceiveAttrs() {
-    const time = get(this, 'time') || 'HH:mm';
+    const time = get(this, 'time') || 'hh:mm';
     this._super(...arguments);
     set(this, 'time', time);
     this.hide();
