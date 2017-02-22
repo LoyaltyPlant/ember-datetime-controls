@@ -39,6 +39,10 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
     this.send('toggle');
   },
 
+  hide() {
+    set(this, 'show', false);
+  },
+
   actions: {
     toggle() {
       this.dispatchHideAllPickersEvent();

@@ -50,7 +50,8 @@ export default Component.extend(BasePickerMixin, {
         onChange(newDateTime);
       }
     },
-    onDateChange() {
+    onDateChange(date) {
+      set(this, 'date', date);
       this.send('onTimeChange', get(this, 'time'));
     }
   }
