@@ -17,11 +17,11 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--time'],
 
   disabled: false,
-  time: 'hh:mm',
+  time: null,
 
   currentHour: computed('time', {
     get() {
-      const [hour] = get(this, 'time').split(':');
+      const hour = get(this, 'time').split(':')[0];
       const isAmPm = get(this, 'isAmPm');
 
       if (isNaN(Number(hour))) {
@@ -36,18 +36,19 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
       }
     }
   }),
+
   currentMinute: computed('time', {
     get() {
-      const [, minute] = get(this, 'time').split(':');
-
-      return minute;
+      return get(this, 'time').split(':')[1];
     }
   }),
+
   isAmPm: computed({
     get() {
       return isAmPm(get(this, 'locale'));
     }
   }),
+
   meridiem: computed('time', {
     get() {
       const [hour] = get(this, 'time').split(':');
@@ -57,9 +58,8 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   }),
 
   didReceiveAttrs() {
-    const time = get(this, 'time') || 'hh:mm';
     this._super(...arguments);
-    set(this, 'time', time);
+
     this.hide();
   },
 

@@ -23,5 +23,6 @@ export function isAmPm(locale) {
 
 export default {
   getLocaleFirstDayOfWeek,
-  getLocaleWeekDays
+  getLocaleWeekDays,
+  isAmPm
 };

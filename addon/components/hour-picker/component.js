@@ -3,8 +3,6 @@ import layout from './template';
 import { MAX_HOURS } from 'ember-datetime-controls/utils/constants';
 import PickerPositioningMixin from 'ember-datetime-controls/mixins/picker-positioning-mixin';
 
-
-
 const {
   Component,
   computed,
