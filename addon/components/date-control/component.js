@@ -16,6 +16,7 @@ const {
 export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   layout,
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--date'],
+  classNameBindings: ['small'],
 
   //passed in
   date: null,
@@ -33,6 +34,17 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   }),
 
   isDateSelected: bool('date'),
+
+  didReceiveAttrs() {
+    const size = get(this, 'size');
+
+    this._super(...arguments);
+
+    switch (size) {
+      case 'small':
+        set(this, 'small', 'dt-pickers__picker--small');
+    }
+  },
 
   click(e) {
     e.stopPropagation();
