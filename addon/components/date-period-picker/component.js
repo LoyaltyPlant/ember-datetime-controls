@@ -1,7 +1,12 @@
 import Ember from 'ember';
 import layout from './template';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  get
+} = Ember;
+
+export default Component.extend({
   layout,
   classNames: ['dt-period'],
 
@@ -17,5 +22,19 @@ export default Ember.Component.extend({
   dateTo: null,
   minDateTo: null,
   maxDateTo: null,
-  disabledDatesTo: null
+  disabledDatesTo: null,
+
+  actions: {
+    onDateFromChange(newDate) {
+      this.send('onChange', newDate, get(this, 'dateTo'));
+    },
+    onDateToChange(newDate) {
+      this.send('onChange', get(this, 'dateFrom'), newDate);
+    },
+    onChange(dateFrom, dateTo) {
+      this.attrs.onchange(dateFrom, dateTo);
+    }
+  }
+
+
 });
