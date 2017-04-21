@@ -3,7 +3,8 @@ import layout from './template';
 
 const {
   Component,
-  get
+  get,
+  set
 } = Ember;
 
 export default Component.extend({
@@ -32,7 +33,11 @@ export default Component.extend({
       this.send('onChange', get(this, 'dateFrom'), newDate);
     },
     onChange(dateFrom, dateTo) {
-      this.attrs.onchange(dateFrom, dateTo);
+      if ( this.attrs.onchange && this.attrs.onchange instanceof Function ) {
+        return this.attrs.onchange(dateFrom, dateTo);
+      }
+      set(this, 'dateFrom', dateFrom);
+      set(this, 'dateTo', dateTo);
     }
   }
 
