@@ -86,8 +86,8 @@ export default Ember.Component.extend({
       monthFirstWeekDay = monthFirstDate.day() === 0 && firstDayOfWeek === 1 ? 7 : monthFirstDate.day(),
       currentTimeZoneDate = get(this, 'initialDate'),
       disabledDates = get(this, 'disabledDates') ? this.get('disabledDates') : [],
-      minDate = this.get('minDate') ? moment.tz(this.get('minDate'), timeZone) : null,
-      maxDate = this.get('maxDate') ? moment.tz(this.get('maxDate'), timeZone) : null;
+      minDate = this.get('minDate') ? moment.tz(this.get('minDate'), timeZone).startOf('day') : null,
+      maxDate = this.get('maxDate') ? moment.tz(this.get('maxDate'), timeZone).startOf('day') : null;
 
     let firstWeek = WEEK.create({dates: []}),
       disabledMonthDates = Ember.A(),
@@ -163,6 +163,7 @@ export default Ember.Component.extend({
             date.weekend = true;
           }
         }
+
         if (disabledMonthDates.includes(date.index) || !date.index) {
           date.disabled = true;
         }
@@ -179,12 +180,29 @@ export default Ember.Component.extend({
     return weeks;
   }),
 
+  resetCurrentDate() {
+    const weeks = get(this, 'weeks');
+
+    weeks.forEach((week) => {
+      get(week, 'dates').forEach((date) => {
+        if ( date.current ) {
+          set(date, 'current', false);
+        }
+      })
+    });
+  },
+
+  resetTimeFromDate(date) {
+
+  },
+
   actions: {
     setDate(date) {
       if (date.disabled) {
         return;
       }
       let newDate = {year: this.get('_year'), month: this.get('_month'), date: date.index};
+      this.resetCurrentDate();
       set(this, '_selectedDate', date);
       this.attrs.onDateUpdated(newDate);
     },
