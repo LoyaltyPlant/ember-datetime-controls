@@ -21,25 +21,32 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
 
   currentHour: computed('time', {
     get() {
-      const hour = get(this, 'time').split(':')[0];
       const isAmPm = get(this, 'isAmPm');
+      const time = get(this, 'time');
+      let hours = "";
 
-      if (isNaN(Number(hour))) {
-        return hour;
+      if (time) {
+        hours = time.split(':')[0];
+
+        if (isAmPm) {
+          hours = (MAX_HOURS + Number(hours)) % 12;
+          hours = `0${hours}`.slice(-2);
+        }
       }
 
-      if (isAmPm) {
-        let _hour = (MAX_HOURS + hour) % 12;
-        return `0${_hour}`.slice(-2);
-      } else {
-        return hour;
-      }
+      return hours;
     }
   }),
 
   currentMinute: computed('time', {
     get() {
-      return get(this, 'time').split(':')[1];
+      const time = get(this, 'time');
+      let minutes = "";
+
+      if (time) {
+        minutes = get(this, 'time').split(':')[1];
+      }
+      return minutes;
     }
   }),
 
@@ -51,9 +58,15 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
 
   meridiem: computed('time', {
     get() {
-      const [hour] = get(this, 'time').split(':');
+      const time = get(this, 'time');
+      let meridiem = "";
 
-      return +hour > 11 ? 'PM' : 'AM';
+      if (time) {
+        const [hours] = get(this, 'time').split(':');
+        meridiem = +hours > 11 ? 'PM' : 'AM';
+      }
+
+      return meridiem;
     }
   }),
 
