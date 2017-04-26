@@ -1,8 +1,8 @@
-import Ember from "ember";
-import moment from "moment";
-import layout from "./template";
-import Config from "ember-datetime-controls/config";
-import PickerStateBusMixin from "ember-datetime-controls/mixins/picker-state-bus-mixin";
+import Ember from 'ember';
+import moment from 'moment';
+import layout from './template';
+import Config from 'ember-datetime-controls/config';
+import PickerStateBusMixin from 'ember-datetime-controls/mixins/picker-state-bus-mixin';
 
 const {
   Component,
@@ -21,9 +21,6 @@ export default Component.extend(PickerStateBusMixin, {
   date: null,
 
   show: false,
-  format: null,
-  timeZone: null,
-  locale: null,
 
   formattedDate: computed('date', function () {
     const date = get(this, 'date');

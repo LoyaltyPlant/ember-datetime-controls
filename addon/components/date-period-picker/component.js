@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import BasePickerMixin from 'ember-datetime-controls/mixins/base-picker-mixin';
 
 const {
   Component,
@@ -7,7 +8,7 @@ const {
   set
 } = Ember;
 
-export default Component.extend({
+export default Component.extend(BasePickerMixin, {
   layout,
   classNames: ['dt-period'],
 

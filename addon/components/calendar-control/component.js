@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import layout from './template';
 import moment from 'moment';
-import {getLocaleWeekDays, getLocaleFirstDayOfWeek} from 'ember-datetime-controls/utils/locale';
-import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
+import { getLocaleFirstDayOfWeek, getLocaleWeekDays } from 'ember-datetime-controls/utils/locale';
+import BasePickerMixin from 'ember-datetime-controls/mixins/base-picker-mixin';
 
 const {
   get,
@@ -18,12 +18,10 @@ export default Ember.Component.extend(BasePickerMixin, {
   layout,
   classNames: ['dt-calendar'],
 
-  locale: null,
   date: null,
   minDate: null,
   maxDate: null,
   disabledDates: null,
-  timeZone: null,
 
   _weekDays: null,
   _month: null,
