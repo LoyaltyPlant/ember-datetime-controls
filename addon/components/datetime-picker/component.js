@@ -6,26 +6,39 @@ import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
 const {
   Component,
   get,
-  set
+  set,
+  computed
 } = Ember;
 
 export default Component.extend(BasePickerMixin, {
   layout,
   classNames: ['dt-pickers'],
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const date = get(this, 'date');
+  // passed in
+  date: null,
+  minDate: null,
+  maxDate: null,
+  disabledDates: null,
+  format: null,
 
-    if (date && date instanceof Date) {
-      set(this, 'time', this.getTimeZoneDate(date).format('HH:mm'));
-      set(this, 'isTimePickerDisabled', false);
-    } else {
-      set(this, 'isTimePickerDisabled', true);
+  time: 'hh:mm',
+
+  isTimePickerDisabled: computed('date', {
+    get() {
+      const date = get(this, 'date');
+
+      if (date && date instanceof Date) {
+        set(this, 'time', this._getTimeZoneDate(date).format('HH:mm'));
+        return false;
+      } else {
+        set(this, 'time', 'hh:mm');
+        this.send('onTimeChange', get(this, 'time'));
+        return true;
+      }
     }
-  },
+  }),
 
-  getTimeZoneDate(date) {
+  _getTimeZoneDate(date) {
     return moment(date)
       .tz(get(this, 'timeZone'))
       .locale(get(this, 'locale'));
@@ -36,9 +49,17 @@ export default Component.extend(BasePickerMixin, {
       const onChange = get(this, 'onChange');
       const date = get(this, 'date');
       const [hour, minute] = time.split(':');
-      const newDateTime = this.getTimeZoneDate(date)
-                                  .set({hour, minute, second: 0})
-                                  .toDate();
+      let newDateTime;
+
+      if (hour !== 'hh' && minute !== 'mm') {
+        newDateTime = this._getTimeZoneDate(date)
+          .set({ hour, minute, second: 0 })
+          .toDate();
+      } else {
+        newDateTime = this._getTimeZoneDate(date)
+          .set({ hour: 0, minute: 0, second: 0 })
+          .toDate();
+      }
 
       if (date && date instanceof Date) {
         set(this, 'date', newDateTime);
@@ -49,7 +70,9 @@ export default Component.extend(BasePickerMixin, {
       if (onChange && onChange instanceof Function) {
         onChange(newDateTime);
       }
+
     },
+
     onDateChange(date) {
       set(this, 'date', date);
       this.send('onTimeChange', get(this, 'time'));

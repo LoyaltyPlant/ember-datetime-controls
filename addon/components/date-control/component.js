@@ -1,9 +1,8 @@
 import Ember from "ember";
 import moment from "moment";
 import layout from "./template";
-import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
+import Config from "ember-datetime-controls/config";
 import PickerStateBusMixin from "ember-datetime-controls/mixins/picker-state-bus-mixin";
-
 
 const {
   Component,
@@ -13,7 +12,7 @@ const {
   set
 } = Ember;
 
-export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
+export default Component.extend(PickerStateBusMixin, {
   layout,
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--date'],
   classNameBindings: ['small'],
@@ -22,14 +21,20 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   date: null,
 
   show: false,
+  format: null,
+  timeZone: null,
+  locale: null,
 
   formattedDate: computed('date', function () {
     const date = get(this, 'date');
+
     if (date && date instanceof Date) {
       return moment(date)
-        .tz(this.get('timeZone'))
-        .locale(this.get('locale'))
-        .format(this.get('format'));
+        .tz(get(this, 'timeZone') || Config.timeZone)
+        .locale(get(this, 'locale') || Config.locale)
+        .format(get(this, 'format') || Config.format);
+    } else {
+      return null;
     }
   }),
 
