@@ -1,8 +1,8 @@
-import Ember from "ember";
-import moment from "moment";
-import layout from "./template";
-import Config from "ember-datetime-controls/config";
-import PickerStateBusMixin from "ember-datetime-controls/mixins/picker-state-bus-mixin";
+import Ember from 'ember';
+import moment from 'moment';
+import layout from './template';
+import Config from 'ember-datetime-controls/config';
+import PickerStateBusMixin from 'ember-datetime-controls/mixins/picker-state-bus-mixin';
 
 const {
   Component,
@@ -15,14 +15,12 @@ const {
 export default Component.extend(PickerStateBusMixin, {
   layout,
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--date'],
+  classNameBindings: ['small'],
 
   //passed in
   date: null,
 
   show: false,
-  format: null,
-  timeZone: null,
-  locale: null,
 
   formattedDate: computed('date', function () {
     const date = get(this, 'date');
@@ -38,6 +36,17 @@ export default Component.extend(PickerStateBusMixin, {
   }),
 
   isDateSelected: bool('date'),
+
+  didReceiveAttrs() {
+    const size = get(this, 'size');
+
+    this._super(...arguments);
+
+    switch (size) {
+      case 'small':
+        set(this, 'small', 'dt-pickers__picker--small');
+    }
+  },
 
   click(e) {
     e.stopPropagation();
