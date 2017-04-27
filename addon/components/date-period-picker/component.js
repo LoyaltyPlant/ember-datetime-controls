@@ -34,7 +34,7 @@ export default Component.extend(BasePickerMixin, {
       this.send('onChange', get(this, 'dateFrom'), newDate);
     },
     onChange(dateFrom, dateTo) {
-      if ( this.attrs.onchange && this.attrs.onchange instanceof Function ) {
+      if (this.attrs.onchange && this.attrs.onchange instanceof Function) {
         return this.attrs.onchange(dateFrom, dateTo);
       }
       set(this, 'dateFrom', dateFrom);

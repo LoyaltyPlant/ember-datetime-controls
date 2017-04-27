@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* eslint-env node */
 'use strict';
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
   included: function (app, parentAddon) {
     this._super.included.apply(this, arguments);
 
-    var target = (parentAddon || app);
+    const target = (parentAddon || app);
 
     target.import('vendor/fonts/dt.svg', {destDir: 'assets/fonts'});
     target.import('vendor/fonts/dt.eot', {destDir: 'assets/fonts'});

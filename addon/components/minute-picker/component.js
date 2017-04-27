@@ -16,7 +16,7 @@ export default Component.extend(PickerPositioningMixin, {
   minutes: computed({
     get() {
       const minutes = [];
-      for (let i = 0; i < MAX_MINUTES; i+=5) {
+      for (let i = 0; i < MAX_MINUTES; i += 5) {
         minutes.push(`0${i}`.slice(-2));
       }
       return minutes;

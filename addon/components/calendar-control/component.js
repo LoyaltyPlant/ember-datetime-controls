@@ -5,16 +5,20 @@ import { getLocaleFirstDayOfWeek, getLocaleWeekDays } from 'ember-datetime-contr
 import BasePickerMixin from 'ember-datetime-controls/mixins/base-picker-mixin';
 
 const {
+  computed,
   get,
   set,
-  computed
+  setProperties,
+  A,
+  Component,
+  Object
 } = Ember;
 
-const WEEK = Ember.Object.extend({
+const WEEK = Object.extend({
   dates: null
 });
 
-export default Ember.Component.extend(BasePickerMixin, {
+export default Component.extend(BasePickerMixin, {
   layout,
   classNames: ['dt-calendar'],
 
@@ -28,51 +32,16 @@ export default Ember.Component.extend(BasePickerMixin, {
   _year: null,
   _selectedDate: null,
 
-  init() {
-    this._super(...arguments);
-    set(this, '_weekDays', getLocaleWeekDays(get(this, 'locale')));
-    set(this, '_localeFirstDayOfWeek', getLocaleFirstDayOfWeek(get(this, 'locale')));
-
-    const weekDays =  get(this, '_weekDays');
-
-    if ( get(this, '_localeFirstDayOfWeek') === 0 ) {
-      set(this, '_weekDays', weekDays.map((weekDay, index) => {
-        let weekDayItem = { weekDay };
-        if ( index === 0 ) {
-          weekDayItem.weekend = true;
-        }
-        return weekDayItem;
-      }));
-    } else {
-      set(this, '_weekDays', weekDays.map((weekDay, index) => {
-        let weekDayItem = { weekDay };
-        if ( [6, 7].includes(index + 1) ) {
-          weekDayItem.weekend = true;
-        }
-        return weekDayItem;
-      }));
-    }
-
-  },
-
-  didReceiveAttrs() {
-    const initialDate = moment(get(this, 'date') || Date.now())
-      .tz(get(this, 'timeZone'));
-
-    set(this, '_month', initialDate.month());
-    set(this, '_year', initialDate.year());
-    set(this, 'initialDate', initialDate);
-  },
-
   monthLabel: computed('_month', function () {
     const locale = get(this, 'locale');
 
-    if ( locale !== 'ru' ) {
-      return moment.months(this.get('_month'));
+    if (locale !== 'ru') {
+      return moment.months(get(this, '_month'));
     } else {
       return moment.tz(get(this, 'timeZone')).locale(locale)._locale._months.standalone[get(this, '_month')];
     }
   }),
+
 
   weeks: computed('_month', '_year', 'minDate', 'maxDate', function () {
     const weeks = [],
@@ -85,12 +54,12 @@ export default Ember.Component.extend(BasePickerMixin, {
       monthLastDate = moment.tz([year, month, daysInMonth], timeZone),
       monthFirstWeekDay = monthFirstDate.day() === 0 && firstDayOfWeek === 1 ? 7 : monthFirstDate.day(),
       currentTimeZoneDate = get(this, 'initialDate'),
-      disabledDates = get(this, 'disabledDates') ? this.get('disabledDates') : [],
-      minDate = this.get('minDate') ? moment.tz(this.get('minDate'), timeZone).startOf('day') : null,
-      maxDate = this.get('maxDate') ? moment.tz(this.get('maxDate'), timeZone).startOf('day') : null;
+      disabledDates = get(this, 'disabledDates') ? get(this, 'disabledDates') : [],
+      minDate = get(this, 'minDate') ? moment.tz(get(this, 'minDate'), timeZone).startOf('day') : null,
+      maxDate = get(this, 'maxDate') ? moment.tz(get(this, 'maxDate'), timeZone).startOf('day') : null;
 
-    let firstWeek = WEEK.create({dates: []}),
-      disabledMonthDates = Ember.A(),
+    let firstWeek = WEEK.create({ dates: [] }),
+      disabledMonthDates = A(),
       currentMonthDate;
 
     if (currentTimeZoneDate.month() === month) {
@@ -120,28 +89,28 @@ export default Ember.Component.extend(BasePickerMixin, {
 
     if (firstDayOfWeek !== monthFirstWeekDay) {
       for (let i = firstDayOfWeek; i < monthFirstWeekDay; i++) {
-        firstWeek.get('dates').push({index: null});
+        get(firstWeek, 'dates').push({ index: null });
       }
     }
 
     let daysInFirstWeek = 0;
     for (let i = monthFirstWeekDay; i <= 6 + firstDayOfWeek; i++) {
-      firstWeek.get('dates').push({index: i + 1 - monthFirstWeekDay});
+      get(firstWeek, 'dates').push({ index: i + 1 - monthFirstWeekDay });
       daysInFirstWeek++;
     }
 
     weeks.push(firstWeek);
 
-    let week = WEEK.create({dates: []}),
+    let week = WEEK.create({ dates: [] }),
       day = 0;
 
     while (day < daysInMonth - daysInFirstWeek) {
       day++;
-      week.get('dates').push({index: day + daysInFirstWeek});
+      get(week, 'dates').push({ index: day + daysInFirstWeek });
 
       if (day % 7 === 0) {
         weeks.push(week);
-        week = WEEK.create({dates: []});
+        week = WEEK.create({ dates: [] });
       }
     }
     if (day % 7 !== 0) {
@@ -149,17 +118,17 @@ export default Ember.Component.extend(BasePickerMixin, {
     }
 
     weeks.forEach(week => {
-      week.get('dates').forEach((date, index) => {
+      get(week, 'dates').forEach((date, index) => {
         if (date.index === currentMonthDate) {
           date.current = true;
         }
 
-        if ( firstDayOfWeek === 1 ) {
-          if ( [6, 7].includes(index+1) ) {
+        if (firstDayOfWeek === 1) {
+          if ([6, 7].includes(index + 1)) {
             date.weekend = true;
           }
         } else {
-          if ( index === 0 ) {
+          if (index === 0) {
             date.weekend = true;
           }
         }
@@ -170,30 +139,50 @@ export default Ember.Component.extend(BasePickerMixin, {
       });
     });
 
-    const lastWeek = weeks[weeks.length-1].get('dates');
+    const lastWeek = get(weeks[weeks.length - 1], 'dates');
     const lastWeekLength = lastWeek.length;
 
-    for(let i = 0; i < 7 - lastWeekLength; i++) {
-      lastWeek.push({index: null});
+    for (let i = 0; i < 7 - lastWeekLength; i++) {
+      lastWeek.push({ index: null });
     }
 
     return weeks;
   }),
 
-  resetCurrentDate() {
-    const weeks = get(this, 'weeks');
+  init() {
+    this._super(...arguments);
+    set(this, '_weekDays', getLocaleWeekDays(get(this, 'locale')));
+    set(this, '_localeFirstDayOfWeek', getLocaleFirstDayOfWeek(get(this, 'locale')));
 
-    weeks.forEach((week) => {
-      get(week, 'dates').forEach((date) => {
-        if ( date.current ) {
-          set(date, 'current', false);
+    const weekDays = get(this, '_weekDays');
+
+    if (get(this, '_localeFirstDayOfWeek') === 0) {
+      set(this, '_weekDays', weekDays.map((weekDay, index) => {
+        let weekDayItem = { weekDay };
+        if (index === 0) {
+          weekDayItem.weekend = true;
         }
-      })
-    });
+        return weekDayItem;
+      }));
+    } else {
+      set(this, '_weekDays', weekDays.map((weekDay, index) => {
+        let weekDayItem = { weekDay };
+        if ([6, 7].includes(index + 1)) {
+          weekDayItem.weekend = true;
+        }
+        return weekDayItem;
+      }));
+    }
+
   },
 
-  resetTimeFromDate(date) {
+  didReceiveAttrs() {
+    const initialDate = moment(get(this, 'date') || Date.now())
+      .tz(get(this, 'timeZone'));
 
+    set(this, '_month', initialDate.month());
+    set(this, '_year', initialDate.year());
+    set(this, 'initialDate', initialDate);
   },
 
   actions: {
@@ -201,26 +190,43 @@ export default Ember.Component.extend(BasePickerMixin, {
       if (date.disabled) {
         return;
       }
-      let newDate = {year: this.get('_year'), month: this.get('_month'), date: date.index};
+      let newDate = { year: get(this, '_year'), month: get(this, '_month'), date: date.index };
       this.resetCurrentDate();
       set(this, '_selectedDate', date);
       this.attrs.onDateUpdated(newDate);
     },
 
     previousMonth() {
-      let yearMonth = moment.tz([this.get('_year'), this.get('_month')], this.get('timeZone')).subtract(1, 'months');
-      this.setProperties({
+      let yearMonth = moment.tz([get(this, '_year'), get(this, '_month')], get(this, 'timeZone')).subtract(1, 'months');
+      setProperties(this, {
         _year: yearMonth.year(),
         _month: yearMonth.month()
       });
     },
 
     nextMonth() {
-      let yearMonth = moment.tz([this.get('_year'), this.get('_month')], this.get('timeZone')).add(1, 'months');
-      this.setProperties({
+      let yearMonth = moment.tz([get(this, '_year'), get(this, '_month')], get(this, 'timeZone')).add(1, 'months');
+      setProperties(this, {
         _year: yearMonth.year(),
         _month: yearMonth.month()
       });
     }
+  },
+
+
+  resetCurrentDate() {
+    const weeks = get(this, 'weeks');
+
+    weeks.forEach((week) => {
+      get(week, 'dates').forEach((date) => {
+        if (date.current) {
+          set(date, 'current', false);
+        }
+      })
+    });
+  },
+
+  resetTimeFromDate() {
+
   }
 });

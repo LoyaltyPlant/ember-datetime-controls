@@ -1,5 +1,11 @@
 import Ember from 'ember';
 
+const {
+  Helper: {
+    helper
+  }
+} = Ember;
+
 export function formatHour([hour], { locale }) {
   if (locale.indexOf('en') !== -1) {
     if (hour < '12') {
@@ -16,4 +22,4 @@ export function formatHour([hour], { locale }) {
   }
 }
 
-export default Ember.Helper.helper(formatHour);
+export default helper(formatHour);

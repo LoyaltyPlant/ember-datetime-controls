@@ -76,11 +76,6 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
     this.hide();
   },
 
-  hide() {
-    set(this, 'showHours', false);
-    set(this, 'showMinutes', false);
-  },
-
   actions: {
     onchange(time) {
       const onchange = get(this, 'onchange');
@@ -100,5 +95,11 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
       this.dispatchHideAllPickersEvent();
       this.toggleProperty('showMinutes');
     }
+  },
+
+  hide() {
+    set(this, 'showHours', false);
+    set(this, 'showMinutes', false);
   }
+
 });

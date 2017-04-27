@@ -1,7 +1,7 @@
-import Ember from "ember";
+/* global window */
 
-export default Ember.Object.extend({
+export default {
   format: "LL",
   locale: window.navigator.userLanguage || window.navigator.language || 'en',
   timeZone: 'Europe/Moscow'
-}).create({});
+};

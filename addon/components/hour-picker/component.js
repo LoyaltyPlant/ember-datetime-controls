@@ -18,7 +18,7 @@ export default Component.extend(PickerPositioningMixin, {
   hours: computed({
     get() {
       const hours = [];
-      for (let i = 1; i <= MAX_HOURS-1; i++) {
+      for (let i = 1; i <= MAX_HOURS - 1; i++) {
         hours.push(`0${i}`.slice(-2));
       }
       return hours;

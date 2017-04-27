@@ -22,6 +22,7 @@ export default Component.extend(PickerStateBusMixin, {
 
   show: false,
 
+  isDateSelected: bool('date'),
   formattedDate: computed('date', function () {
     const date = get(this, 'date');
 
@@ -35,8 +36,6 @@ export default Component.extend(PickerStateBusMixin, {
     }
   }),
 
-  isDateSelected: bool('date'),
-
   didReceiveAttrs() {
     const size = get(this, 'size');
 
@@ -46,15 +45,6 @@ export default Component.extend(PickerStateBusMixin, {
       case 'small':
         set(this, 'small', 'dt-pickers__picker--small');
     }
-  },
-
-  click(e) {
-    e.stopPropagation();
-    this.send('toggle');
-  },
-
-  hide() {
-    set(this, 'show', false);
   },
 
   actions: {
@@ -83,5 +73,14 @@ export default Component.extend(PickerStateBusMixin, {
     cleanDate() {
       set(this, 'date', null);
     }
+  },
+
+  click(e) {
+    e.stopPropagation();
+    this.send('toggle');
+  },
+
+  hide() {
+    set(this, 'show', false);
   }
 });

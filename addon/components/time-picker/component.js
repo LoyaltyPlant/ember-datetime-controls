@@ -12,10 +12,10 @@ const {
 } = Ember;
 
 export default Component.extend(BasePickerMixin, {
+  moment: service(),
+
   layout,
   classNames: ['dt-pickers'],
-
-  moment: service(),
 
   init() {
     this._super(...arguments);

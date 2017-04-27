@@ -1,6 +1,6 @@
-import moment from "moment";
-import {getLocaleWeekDays, getLocaleFirstDayOfWeek} from "ember-datetime-controls/utils/locale";
-import numericDate from "ember-datetime-controls/utils/numeric-date";
+import moment from 'moment';
+import { getLocaleWeekDays, getLocaleFirstDayOfWeek } from 'ember-datetime-controls/utils/locale';
+import numericDate from 'ember-datetime-controls/utils/numeric-date';
 
 export class Week {
   constructor(index) {
@@ -27,7 +27,7 @@ export class CalendarLocaleInfo {
 
 export class MonthInfo {
 
-  constructor(year, month, timeZone, calendarLocale) {
+  constructor(year, month, timeZone) {
     this.month = month;
 
     let monthFirstDate = moment.tz([year, month, 1], timeZone);
@@ -59,8 +59,6 @@ export default class CalendarMonthView {
   get weeks() {
     const weeks = [];
     let week = new Week();
-
-    // if (monthFirstDate.day() === 0 && calendarLocale.startWeekDay === 1) {
 
     let monthDatesBefore = (this.monthInfo.monthFirstWeekDay === 0 && this.localeInfo.startWeekDay === 1 ? -5 : (2 - this.monthInfo.monthFirstWeekDay) );
     while (monthDatesBefore <= 0) {

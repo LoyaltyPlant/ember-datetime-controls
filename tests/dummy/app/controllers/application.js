@@ -1,12 +1,21 @@
-import Ember from "ember";
+import Ember from 'ember';
 
-export default Ember.Controller.extend({
-  // newDate: new Date(),
+const {
+  set,
+  computed: {
+    alias
+  },
+  Controller
+} = Ember;
+
+export default Controller.extend({
   newDate: null,
+
+  dates: alias('model'),
+
   actions: {
     log(date) {
-      // console.log(date);
-      Ember.set(this, 'newDate', date);
+      set(this, 'newDate', date);
     }
   }
 });

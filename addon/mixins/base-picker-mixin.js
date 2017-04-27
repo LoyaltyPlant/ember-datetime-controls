@@ -1,7 +1,11 @@
-import Ember from "ember";
-import Config from "ember-datetime-controls/config";
+import Ember from 'ember';
+import Config from 'ember-datetime-controls/config';
 
-export default Ember.Mixin.create({
+const {
+  Mixin
+} = Ember;
+
+export default Mixin.create({
   format: Config.format,
   locale: Config.locale,
   timeZone: Config.timeZone

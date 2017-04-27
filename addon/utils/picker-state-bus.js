@@ -1,4 +1,4 @@
-import Ember from "ember";
+import Ember from 'ember';
 
 const {
   Evented
@@ -15,7 +15,7 @@ const PICKER_STATE_BUS = Ember.Object.extend(Evented, {
     this.trigger('hide-pickers');
   }
 
-}).create();
+}).create({});
 
 if (document) {
   document.addEventListener('click', PICKER_STATE_BUS.triggerClose.bind(PICKER_STATE_BUS));

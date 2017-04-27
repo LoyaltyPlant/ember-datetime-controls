@@ -1,6 +1,10 @@
 import Ember from 'ember';
 import PICKER_STATE_BUS from 'ember-datetime-controls/utils/picker-state-bus';
 
+const {
+  get,
+  Mixin
+} = Ember;
 /**
  * This mixin provides 'dispatchHideAllPickersEvent'
  * method which triggers 'hide-pickers' event
@@ -10,7 +14,7 @@ import PICKER_STATE_BUS from 'ember-datetime-controls/utils/picker-state-bus';
  * except component which trigger the event.
  */
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   init() {
     this._super(...arguments);
     const self = this;
@@ -18,7 +22,7 @@ export default Ember.Mixin.create({
     PICKER_STATE_BUS.on('hide-pickers', function (targetObject) {
       if (!targetObject ||
         self.hide &&
-        (!targetObject.get('isDestroyed') || targetObject.get('isDestroying'))) {
+        (!get(targetObject, 'isDestroyed') || get(targetObject, 'isDestroying'))) {
         self.hide();
       }
     });

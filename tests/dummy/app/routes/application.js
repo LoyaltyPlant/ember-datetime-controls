@@ -1,7 +1,12 @@
-import Ember from "ember";
-import moment from "moment";
+import Ember from 'ember';
+import moment from 'moment';
 
-export default Ember.Route.extend({
+const {
+  A,
+  Route
+} = Ember;
+
+export default Route.extend({
   model() {
     const disabledDates = [],
       todayDate = new Date(),
@@ -12,7 +17,7 @@ export default Ember.Route.extend({
       berlinDate = moment.tz('Europe/Berlin').toDate(),
       moscowDate = moment.tz('Europe/Moscow').toDate();
 
-    const datesList = Ember.A([new Date(), new Date()]);
+    const datesList = A([new Date(), new Date()]);
     disabledDates.push(tommorrowDate);
 
     return {

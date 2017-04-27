@@ -1,7 +1,7 @@
-import Ember from "ember";
-import layout from "./template";
-import moment from "moment";
-import BasePickerMixin from "ember-datetime-controls/mixins/base-picker-mixin";
+import Ember from 'ember';
+import layout from './template';
+import moment from 'moment';
+import BasePickerMixin from 'ember-datetime-controls/mixins/base-picker-mixin';
 
 const {
   Component,
@@ -26,22 +26,16 @@ export default Component.extend(BasePickerMixin, {
   isTimePickerDisabled: computed('date', {
     get() {
       const date = get(this, 'date');
-
-      if (date && date instanceof Date) {
-        set(this, 'time', this._getTimeZoneDate(date).format('HH:mm'));
-        return false;
-      } else {
-        set(this, 'time', 'hh:mm');
-        this.send('onTimeChange', get(this, 'time'));
-        return true;
-      }
+      return !(date && date instanceof Date);
     }
   }),
 
-  _getTimeZoneDate(date) {
-    return moment(date)
-      .tz(get(this, 'timeZone'))
-      .locale(get(this, 'locale'));
+  init() {
+    this._super(...arguments);
+
+    if (this.attrs.date && this.attrs.date instanceof Date) {
+      set(this, 'time', this._getTimeZoneDate(this.attrs.date).format('HH:mm'));
+    }
   },
 
   actions: {
@@ -77,5 +71,12 @@ export default Component.extend(BasePickerMixin, {
       set(this, 'date', date);
       this.send('onTimeChange', get(this, 'time'));
     }
+  },
+
+  _getTimeZoneDate(date) {
+    return moment(date)
+      .tz(get(this, 'timeZone'))
+      .locale(get(this, 'locale'));
   }
+
 });
