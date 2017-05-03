@@ -13,8 +13,12 @@ export default Component.extend(BasePickerMixin, {
   classNames: ['dt-period'],
 
   //functions
-  onDateFromChange: null,
-  onDateToChange: null,
+  onDateFromChange(newDate) {
+    this.send('onChange', newDate, get(this, 'dateTo'));
+  },
+  onDateToChange(newDate) {
+    this.send('onChange', get(this, 'dateFrom'), newDate);
+  },
 
   //passed in
   dateFrom: null,
@@ -27,12 +31,6 @@ export default Component.extend(BasePickerMixin, {
   disabledDatesTo: null,
 
   actions: {
-    onDateFromChange(newDate) {
-      this.send('onChange', newDate, get(this, 'dateTo'));
-    },
-    onDateToChange(newDate) {
-      this.send('onChange', get(this, 'dateFrom'), newDate);
-    },
     onChange(dateFrom, dateTo) {
       if ( this.attrs.onchange && this.attrs.onchange instanceof Function ) {
         return this.attrs.onchange(dateFrom, dateTo);
