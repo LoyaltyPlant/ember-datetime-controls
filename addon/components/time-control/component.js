@@ -25,10 +25,12 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
       const time = get(this, 'time');
       let hours = "";
 
+      console.log(time);
+
       if (time) {
         hours = time.split(':')[0];
 
-        if (isAmPm) {
+        if (isAmPm && !isNaN(+hours)) {
           hours = (MAX_HOURS + Number(hours)) % 12;
           hours = `0${hours}`.slice(-2);
         }
@@ -72,6 +74,10 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
 
   didReceiveAttrs() {
     this._super(...arguments);
+
+    if ( !get(this, 'time') ) {
+      set(this, 'time', 'hh:mm');
+    }
 
     this.hide();
   },
