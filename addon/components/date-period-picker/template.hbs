@@ -4,11 +4,13 @@
     minDate=minDateFrom
     maxDate=maxDateFrom
     disabledDates=disabledDatesFrom
-    onChange=onDateFromChange
+    onChange=(action onDateFromChange)
     disabledDates=disabledDatesFrom
     timeZone=timeZone
     locale=locale
     format=format
+    size=size
+    allowClear=allowClear
 }}
 {{!--to--}}
 {{date-picker
@@ -16,9 +18,11 @@
     minDate=minDateTo
     maxDate=maxDateTo
     disabledDates=disabledDatesTo
-    onChange=onDateToChange
+    onChange=(action onDateToChange)
     disabledDates=disabledDatesTo
     timeZone=timeZone
     locale=locale
     format=format
+    size=size
+    allowClear=allowClear
 }}
