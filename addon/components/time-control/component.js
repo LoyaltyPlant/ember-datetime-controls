@@ -25,8 +25,6 @@ export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
       const time = get(this, 'time');
       let hours = "";
 
-      console.log(time);
-
       if (time) {
         hours = time.split(':')[0];
 
