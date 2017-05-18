@@ -43,6 +43,12 @@
       padding: 4px 8px;
       min-height: 30px;
     }
+
+    &--disabled {
+      background: rgb(241,241,241);
+      color: rgb(114,116,122);
+      cursor: not-allowed;
+    }
   }
 
   &__time-wrapper {

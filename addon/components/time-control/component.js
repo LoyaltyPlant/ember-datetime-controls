@@ -15,6 +15,7 @@ const {
 export default Component.extend(BasePickerMixin, PickerStateBusMixin, {
   layout,
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--time'],
+  classNameBindings: ['isDisabled:dt-pickers__picker--disabled'],
 
   disabled: false,
   time: null,

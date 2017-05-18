@@ -3,6 +3,7 @@ import moment from 'moment';
 import layout from './template';
 import Config from 'ember-datetime-controls/config';
 import PickerStateBusMixin from 'ember-datetime-controls/mixins/picker-state-bus-mixin';
+import BasePickerMixin from 'ember-datetime-controls/mixins/base-picker-mixin';
 
 const {
   Component,
@@ -12,10 +13,10 @@ const {
   set
 } = Ember;
 
-export default Component.extend(PickerStateBusMixin, {
+export default Component.extend(PickerStateBusMixin, BasePickerMixin, {
   layout,
   classNames: ['dt-pickers__picker', 'dt-pickers__picker--date'],
-  classNameBindings: ['small'],
+  classNameBindings: ['small', 'isDisabled:dt-pickers__picker--disabled'],
 
   //passed in
   date: null,
@@ -49,6 +50,9 @@ export default Component.extend(PickerStateBusMixin, {
   },
 
   click(e) {
+    if ( get(this, 'isDisabled') ) {
+      return ;
+    }
     e.stopPropagation();
     this.send('toggle');
   },
