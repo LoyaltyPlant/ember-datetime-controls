@@ -21,18 +21,16 @@ export default Component.extend(BasePickerMixin, {
   disabledDates: null,
   format: null,
 
-  time: 'hh:mm',
-
   isTimePickerDisabled: computed('date', {
     get() {
       const date = get(this, 'date');
 
       if (date && date instanceof Date) {
-        set(this, 'time', this._getTimeZoneDate(date).format('HH:mm'));
+        // set(this, 'time', this._getTimeZoneDate(date).format('HH:mm'));
         return false;
       } else {
-        set(this, 'time', 'hh:mm');
-        this.send('onTimeChange', get(this, 'time'));
+        // set(this, 'time', 'hh:mm');
+        // this.send('onTimeChange', get(this, 'time'));
         return true;
       }
     }
@@ -42,6 +40,15 @@ export default Component.extend(BasePickerMixin, {
     return moment(date)
       .tz(get(this, 'timeZone'))
       .locale(get(this, 'locale'));
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    const date = get(this, 'date');
+
+    if (date && date instanceof Date) {
+      set(this, 'time', this._getTimeZoneDate(date).format('HH:mm'));
+    }
   },
 
   actions: {
@@ -63,6 +70,7 @@ export default Component.extend(BasePickerMixin, {
 
       if (date && date instanceof Date) {
         set(this, 'date', newDateTime);
+        set(this, 'time', time);
       } else {
         return;
       }

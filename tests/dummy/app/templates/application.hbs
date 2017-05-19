@@ -148,3 +148,20 @@
         }}
     </div>
 </div>
+
+<h3>test</h3>
+<label>
+    {{input type="checkbox" checked=showPicker}}
+</label>
+
+{{#if showPicker}}
+<div class="row">
+    <div class="col-xs-4">
+        {{datetime-picker
+            date=newDate
+            locale="en-US"
+            timeZone="America/Chicago"
+        }}
+    </div>
+</div>
+{{/if}}

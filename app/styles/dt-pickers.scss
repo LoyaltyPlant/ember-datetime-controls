@@ -57,10 +57,18 @@
 
   &__time {
     position: relative;
-    margin-left: 20px;
+    margin-left: 10px;
 
     &:first-child {
       margin-left: 0;
+    }
+
+    &--hour {
+      width: 32px;
+    }
+
+    &--minutes {
+      width: 43px;
     }
 
     &--hour, &--minutes {
