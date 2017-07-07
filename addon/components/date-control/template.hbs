@@ -1,4 +1,4 @@
-<div class="dt-pickers__formatted-date">{{formattedDate}}</div>
+<div class="dt-pickers__formatted-date {{if (not formattedDate) 'dt-pickers__formatted-date--placeholder'}}">{{or formattedDate placeholder}}</div>
 {{#if (and allowClear isDateSelected)}}
     <i class="icon-delete" {{action "cleanDate" bubbles=false}}></i>
 {{else}}

@@ -95,6 +95,8 @@
           dateFrom=dateFrom
           dateTo=dateTo
           size="small"
+          placeholderFrom="from"
+          placeholderTo="to"
       }}
     </div>
   </div>
@@ -110,11 +112,11 @@
 
 <div class="row">
     <div class="col-xs-2">
-      {{time-picker 
-        time="23:30" 
+      {{time-picker
+        time="23:30"
         locale="en-US"
         isDisabled=true
-        }}        
+        }}
     </div>
 
     <div class="col-xs-3" >
@@ -165,3 +167,17 @@
     </div>
 </div>
 {{/if}}
+
+<div class="row">
+  <div class="col-xs-6">
+      {{datetime-period-picker
+          format="LL"
+          dateFrom=datetimepickerfrom
+          dateTo=datetimepickerto
+          locale="en-US"
+          timeZone="America/New_York"
+          placeholderFrom="from"
+          placeholderTo="to"
+      }}
+  </div>
+</div>
