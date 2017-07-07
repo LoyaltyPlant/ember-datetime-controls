@@ -1,6 +1,6 @@
 {
   "name": "ember-datetime-controls",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Datetime controls for Ember with time zone support",
   "directories": {
     "doc": "doc",
